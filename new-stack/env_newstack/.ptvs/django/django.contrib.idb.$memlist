@@ -5,9 +5,9 @@ sites
 sitemaps
 postgres
 staticfiles
-contenttypes
-auth
 humanize
+auth
+contenttypes
 admindocs
 redirects
 gis

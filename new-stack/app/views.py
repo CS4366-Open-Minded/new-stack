@@ -9,17 +9,17 @@ from datetime import datetime
 
 import requests
 
-#def home(request):
-#    """Renders the home page."""
-#    assert isinstance(request, HttpRequest)
-#    return render(
-#        request,
-#        'app/index.html',
-#        {
-#            'title':'Home Page',
-#            'year':datetime.now().year,
-#        }
-#    )
+def home(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/index.html',
+        {
+            'title':'Home Page',
+            'year':datetime.now().year,
+        }
+    )
 
 def getData(): 
     #Retrieve data for backend
@@ -56,14 +56,14 @@ def getData():
     }
     return Article
 
-def home(request):
-    assert isinstance(request, HttpRequest)
-    Article = getData()
-    return render(
-        request,
-        'app/index2.html',
-        Article
-        )
+#def home(request):
+#    assert isinstance(request, HttpRequest)
+#    Article = getData()
+#    return render(
+#        request,
+#        'app/index2.html',
+#        Article
+#        )
 
 def contact(request):
     """Renders the contact page."""

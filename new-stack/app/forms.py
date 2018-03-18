@@ -16,3 +16,8 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
+
+
+#class RegistrationForm():
+#    """Register form."""
+#    username
