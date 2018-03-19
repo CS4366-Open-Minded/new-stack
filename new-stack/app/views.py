@@ -9,6 +9,8 @@ from datetime import datetime
 
 import requests
 
+from app.forms import BootstrapRegistrationForm
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -64,6 +66,26 @@ def getData():
 #        'app/index2.html',
 #        Article
 #        )
+
+def signup(request):
+    """Render the signup page."""
+    #assert isinstance(request, HttpRequest)
+    if request.method == 'POST':
+        regform = BootstrapRegistrationForm(request.POST)
+        if regform.is_valid():
+            regform.save()
+    else:
+            regform = BootstrapRegistrationForm()
+    
+    return render(
+        request,
+        'app/register.html',
+        {
+            'form': regform,
+            'title':'Sign Up',
+            'year':datetime.now().year,
+            }
+        )
 
 def contact(request):
     """Renders the contact page."""

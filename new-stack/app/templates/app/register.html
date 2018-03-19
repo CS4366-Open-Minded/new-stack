@@ -1,14 +1,13 @@
-{% extends "app/layout.html" %}
+﻿{% extends "app/layout.html" %}
 
 {% block content %}
 
 <h2>{{ title }}</h2>
 <div class="row">
     <div class="col-md-8">
-        <section id="loginForm">
+        <section id="signupForm">
             <form action="." method="post" class="form-horizontal">
                 {% csrf_token %}
-                <h4>Use a local account to log in.</h4>
                 <hr />
                 <div class="form-group">
                     <label for="id_username" class="col-md-2 control-label">User Name</label>
@@ -17,20 +16,29 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="id_username" class="col-md-2 control-label">Email</label>
+                    <div class="col-md-10">
+                        {{ form.email }}
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="id_password" class="col-md-2 control-label">Password</label>
                     <div class="col-md-10">
-                        {{ form.password }}
+                        {{ form.password1 }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_password" class="col-md-2 control-label">Confirm Password</label>
+                    <div class="col-md-10">
+                        {{ form.password2 }}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <input type="submit" value="Register" class="btn btn-default" />
                     </div>
                 </div>
-                {% if form.errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
-                {% endif %}
             </form>
         </section>
     </div>
@@ -40,7 +48,6 @@
 </div>
 
 {% endblock %}
-
 
 {% block scripts %}
 

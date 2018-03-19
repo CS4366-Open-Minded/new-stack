@@ -10,10 +10,7 @@ import django.contrib.auth.views
 import app.forms
 import app.views
 
-# Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:
@@ -27,11 +24,12 @@ urlpatterns = [
             'authentication_form': app.forms.BootstrapAuthenticationForm,
             'extra_context':
             {
-                'title': 'Log in',
+                'title': 'Sign In',
                 'year': datetime.now().year,
             }
         },
         name='login'),
+    url(r'^signup/$', app.views.signup, name='register'),
     url(r'^logout$',
         django.contrib.auth.views.logout,
         {
