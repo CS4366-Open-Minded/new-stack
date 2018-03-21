@@ -4,7 +4,7 @@ Definition of forms.
 
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
@@ -22,15 +22,20 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'}))
 
 
-class BootstrapRegistrationForm(forms.ModelForm):
-    """Registration form which uses bootstrp CSS."""
+class BootstrapRegistrationForm(UserCreationForm):
+    """Registration form which uses bootstrp CSS."""        
+    class Meta(UserCreationForm.Meta):
+            model = User
+            fields = UserCreationForm.Meta.fields + ('email', 'password1', 'password2')
+            field_classes = {'username': UsernameField}
 
     error_messages = {
-        'username_exists:': _("The username %(username) already exists."),
-        'email_exists':_("The email %(email) already exists."),
         'password_mismatch': _("The two password fields didn't match."),
+        'username_exists:': _("The username %(username) already exists."),
+        'email_exists':_("The entered email already exists."),
     }
-    username = forms.CharField(label=_("User Name"),max_length=254, min_length=8, 
+
+    username = forms.CharField(label=_("User Name"),max_length=254, min_length=7, 
                                widget=forms.TextInput({
                                    'class':'form-control',
                                    'placeholder':'User name'}),
@@ -44,6 +49,7 @@ class BootstrapRegistrationForm(forms.ModelForm):
                                      )
     password1 = forms.CharField(
         label=_("Password"),
+        min_length=8,
         strip=False,
         widget=forms.PasswordInput({
                                      'class':'form-control',
@@ -52,36 +58,17 @@ class BootstrapRegistrationForm(forms.ModelForm):
     )
     password2 = forms.CharField(
         label=_("Password confirmation"),
+        min_length=8,
+        strip=False,
         widget=forms.PasswordInput({
                                      'class':'form-control',
                                      'placeholder':'Confirm Password'}),
-        strip=False,
         help_text=_("Enter the same password as before, for verification."),
     )
 
-    class Meta:
-        model = User
-        fields = ("username",)
-        field_classes = {'username': UsernameField}
-
-    def __init__(self, *args, **kwargs):
-        super(BootstrapRegistrationForm, self).__init__(*args, **kwargs)
-        if self._meta.model.USERNAME_FIELD in self.fields:
-            self.fields[self._meta.model.USERNAME_FIELD].widget.attrs.update({'autofocus': True})
-
-    def clean_username(self):
-        username = self.cleaned_data['username'].lower()
-        u = User.objects.filter(username=username)
-        if u.count():
-            raise forms.ValidationError(
-                self.error_messages['username_exists'],
-                code='username_exists',
-                )
-
     def clean_email(self):
-        email = self.cleaned_data['email'].lower()
-        u = User.objects.filter(email=email)
-        if u.count():
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).count():
             raise forms.ValidationError(
                 self.error_messages['email_exists'],
                 code='email_exists',

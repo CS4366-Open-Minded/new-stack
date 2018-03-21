@@ -9,6 +9,11 @@
             <form action="." method="post" class="form-horizontal">
                 {% csrf_token %}
                 <hr />
+                {% if messages %}
+                    {% for message in messages %}
+                    <p class="alert alert-success" role="alert"> {{message}} </p>    
+                    {% endfor %}
+                {% endif %}
                 <div class="form-group">
                     <label for="id_username" class="col-md-2 control-label">User Name</label>
                     <div class="col-md-10">
@@ -38,6 +43,13 @@
                         <input type="hidden" name="next" value="/" />
                         <input type="submit" value="Register" class="btn btn-default" />
                     </div>
+                </div>
+                {%if form.errors%}
+                <div class="alert alert-danger" role="alert">
+                    {% for err, errMsg in form.errors.items%}
+                         <p>{{errMsg}}</p>
+                    {%endfor%}
+                {%endif%}
                 </div>
             </form>
         </section>

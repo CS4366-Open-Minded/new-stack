@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
+from django.contrib import messages
+from django.shortcuts import redirect
 
 import requests
 
@@ -69,11 +71,13 @@ def getData():
 
 def signup(request):
     """Render the signup page."""
-    #assert isinstance(request, HttpRequest)
+    assert isinstance(request, HttpRequest)
     if request.method == 'POST':
         regform = BootstrapRegistrationForm(request.POST)
         if regform.is_valid():
             regform.save()
+            messages.success(request, "Account created successfully!")
+            return redirect('register')
     else:
             regform = BootstrapRegistrationForm()
     
