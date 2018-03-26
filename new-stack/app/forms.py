@@ -31,7 +31,6 @@ class BootstrapRegistrationForm(UserCreationForm):
 
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
-        'username_exists:': _("The username %(username) already exists."),
         'email_exists':_("The entered email already exists."),
     }
 

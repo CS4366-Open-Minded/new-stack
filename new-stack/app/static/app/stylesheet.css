@@ -3,6 +3,90 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.front-door-banner__header {
+    font-family: "FaktCondensed",AvenirNextCondensed-Medium,"Segoe UI",sans-serif;
+    font-weight: 900;
+    font-size: 54px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #000;
+    display: inline-block;
+    padding: 0 0 2px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    border-bottom: 10px solid #F52828;
+    border-bottom-width: 10px;
+    border-bottom-style: solid;
+	border-bottom-color: rgb(52, 152, 219);
+    margin: 0 0 14px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 14px;
+    margin-left: 0px;
+}
+
+.front-door-banner__subheader {
+    font-family: "Fakt",AvenirNext-Medium,"Segoe UI",sans-serif;
+    font-weight: 500;
+    font-size: 35px;
+    color: #000;
+    margin: 0 0 18px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 18px;
+    margin-left: 0px;
+}
+
+.front-door-banner {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.grid-page{width:100%;background:#fff;}
+
+.grid-page{position:relative;margin:0 auto;padding:30px 0 30px;}.
+
+/* .page-gap{ */
+	/* width:100%; */
+	/* background:#fff; */
+/* } */
+
+/* .page-gap{ */
+	/* margin-top:40px; */
+/* } */
+
+/* .page-gap{ */
+	/* margin-top:40px; */
+/* } */
+
+/* .page-gap{ */
+	/* margin-top:0; */
+/* } */
+
+.page-content{margin:0 auto;padding:40px 0;}
+
+.page-content{
+	width:100%;height:100px;margin:5px 0;
+}
+
+.page-content{padding:30px 0;}
+
+.page-content{margin:0 auto;padding:40px 0 0;}
+
+.page-content{margin:0 auto;padding:40px 0 0;text-align:center;}
+
+.page-content{margin:0 auto;}
+
+/* .gridline{position:absolute;background-color:#f2f2f2;} */
+
+/* .gridline-x{position:absolute;left:0;top:50%;width:100%;height:1px;} */
+
+/* svg.gridline-x{stroke:#d5d5d5;} */
+
+/* div.gridline-x{background-color:#f2f2f2;}. */
+
 .header{
     background-color: red;
     background-position: center;
@@ -10,6 +94,7 @@ body{
     width: 100%;
     height: 100px;
 }
+
 .card{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 	transition: 0.3s;
@@ -44,13 +129,13 @@ img {
     width: 350px;
 }
 
-h3{
-    margin: 5px;
-    text-align: center;
-}
+/* h1{ */
+    /* text-align: center; */
+    /* padding: 30px; */
+/* } */
 
-h1{
-    text-align: center;
-    padding: 30px;
-}
+/* h3{ */
+    /* margin: 5px; */
+    /* text-align: center; */
+/* } */
 
