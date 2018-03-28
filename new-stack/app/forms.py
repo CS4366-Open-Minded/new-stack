@@ -72,6 +72,7 @@ class BootstrapRegistrationForm(UserCreationForm):
                 self.error_messages['email_exists'],
                 code='email_exists',
                 )
+        return email
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -86,8 +87,16 @@ class BootstrapRegistrationForm(UserCreationForm):
         return password2
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
+        #user = super(UserCreationForm, self).save(commit=False)
+        #user.set_password(self.cleaned_data["password1"])
+        #if commit:
+        #    user.save()
+
+        # Create user
+        user = User.objects.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], password=self.cleaned_data['password1'])
+        
+        # Make user inactive
+        user.is_active = False
+        user.save()
+
         return user

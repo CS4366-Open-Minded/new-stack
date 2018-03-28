@@ -28,8 +28,10 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-                {% if form.errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                {% if not user.is_active and request.method == 'POST' %}
+                    <p class="alert alert-warning"> Please confirm your account. </p>
+                {% elif form.errors %}
+                    <p class="validation-summary-errors">Please enter a correct user name and password.</p>
                 {% endif %}
             </form>
         </section>

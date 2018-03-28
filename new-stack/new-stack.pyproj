@@ -36,6 +36,9 @@
     </Compile>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
+    <Compile Include="app\tokens.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -59,6 +62,7 @@
     <Folder Include="new_stack\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\activate-email.html" />
     <Content Include="app\templates\app\index2.html" />
     <Content Include="app\templates\app\register.html" />
     <Content Include="requirements.txt" />

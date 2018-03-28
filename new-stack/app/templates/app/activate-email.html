@@ -1,0 +1,13 @@
+﻿{% autoescape off %}
+
+Hi {{ user.username }},
+
+Please click on the link to confirm your NEWSTACK account,
+
+http://{{ domain }}{% url 'activateAccount' uidb64=uid token=token %}
+
+Thank you,
+
+NEWSTACK Team
+
+{% endautoescape %}
