@@ -68,11 +68,11 @@ class Profile(models.Model):
     )
 
 class Article(models.Model):
-    source_ID = models.CharField(max_length=200, null=True)
-    source_Name = models.CharField(max_length=200)
-    author_Name = models.CharField(max_length=200)
+    source = models.CharField(max_length=200)
+    author = models.CharField(max_length=200, null=True)
     title = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True)
     url = models.URLField(max_length=200)
-    url_To_Image = models.URLField(max_length=200)
-    published_On = models.CharField(max_length=200)
-    category = models.CharField(max_length=200, null=True)
+    urlImage = models.URLField(max_length=200, null=True)
+    publishedOn = models.CharField(max_length=200)
+

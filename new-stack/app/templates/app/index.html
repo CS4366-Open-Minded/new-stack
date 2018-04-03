@@ -12,26 +12,45 @@
 
 <hr/>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://www.djangobook.com/en/2.0/index.html">Learn more &raquo;</a></p>
+    <div class="grid">
+    {% for article in Articles %}
+        <div id="card{{article.id}}"class="card" style="position:relative;">
+            <img id="myImg{{article.id}}" class="urlImage" src={{article.urlImage}} /> 
+            <h4 id="title{{article.id}}"> {{article.title}}</h4>
+            <p>{{article.description}}</p>
+        </div>
+
+        <div id={{article.id}} class="modal">
+            <span class="close"> &times; </span>
+            <img class="modal-content" id="img{{article.id}}">
+            <div class="background">
+                <div id="description{{article.id}}"></div>
+                <!-- <div id="author{{article.id}}"><div>  -->
+            </div>
+        </div>
+
+        <script>
+            var modal = document.getElementById('{{article.id}}');
+            var modalImg = document.getElementById('img{{article.id}}');
+            var img = document.getElementById('card{{article.id}}');
+            var caption = document.getElementById('description{{article.id}}');
+            var author = document.getElementById('author{{article.id}}');
+            //var source = document.getElementById('source{{article.id}}');
+
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = '{{article.urlImage}}';
+                caption.innerHTML = '{{article.description}}';
+                author.innerHTML = '{{article.author}}';
+                //source.innerHTML = '{{article.url}}';
+            }
+            
+            var span = document.getElementsByClassName("close")['{{article.id}}'-1];
+            span.onclick = function(){
+                modal.style.display = "none";
+            }
+        </script>
+    {%endfor%}
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
-    </div>
-</div>
 
 {% endblock %}
