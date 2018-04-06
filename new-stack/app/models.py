@@ -72,6 +72,7 @@ class Article(models.Model):
     author = models.CharField(max_length=200, null=True)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200, null=True)
+    text = models.CharField(max_length=400)
     url = models.URLField(max_length=200)
     urlImage = models.URLField(max_length=200, null=True)
     publishedOn = models.CharField(max_length=200)

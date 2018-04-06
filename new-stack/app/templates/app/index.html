@@ -12,6 +12,7 @@
 
 <hr/>
 
+
     <div class="grid">
     {% for article in Articles %}
         <div id="card{{article.id}}"class="card" style="position:relative;">
@@ -22,33 +23,41 @@
 
         <div id={{article.id}} class="modal">
             <span class="close"> &times; </span>
-            <img class="modal-content" id="img{{article.id}}">
+            
             <div class="background">
-                <div id="description{{article.id}}"></div>
-                <!-- <div id="author{{article.id}}"><div>  -->
+                <img class="modal-content" id="img{{article.id}}">
+                <div style="padding: 20px; text-align: justify" id="text{{article.id}}"></div>
+                <div style="padding: 20px;" id="reference{{article.id}}"></div>
             </div>
         </div>
 
         <script>
+            
             var modal = document.getElementById('{{article.id}}');
             var modalImg = document.getElementById('img{{article.id}}');
             var img = document.getElementById('card{{article.id}}');
-            var caption = document.getElementById('description{{article.id}}');
-            var author = document.getElementById('author{{article.id}}');
-            //var source = document.getElementById('source{{article.id}}');
+            img.style.cursor = "pointer";
+            var caption = document.getElementById('text{{article.id}}');
+            var author = document.getElementById('reference{{article.id}}');
 
             img.onclick = function(){
                 modal.style.display = "block";
                 modalImg.src = '{{article.urlImage}}';
-                caption.innerHTML = '{{article.description}}';
-                author.innerHTML = '{{article.author}}';
-                //source.innerHTML = '{{article.url}}';
+                caption.innerHTML = '{{article.text}}';
+                author.innerHTML = 'Author:'+' {{article.author}}';
             }
             
-            var span = document.getElementsByClassName("close")['{{article.id}}'-1];
-            span.onclick = function(){
-                modal.style.display = "none";
+            window.onclick = function(event){
+                if (event.target == modal){
+                    modal.style.display = "none";
+                }
             }
+
+            // var span = document.getElementsByClassName("close")[i+1];
+            // console.log(span);
+            // span.onclick = function(){
+            //     modal.style.display = "none";
+            // }
         </script>
     {%endfor%}
     </div>
