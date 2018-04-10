@@ -1,11 +1,10 @@
-__all__
-req_install
+parse_requirements
 absolute_import
 req_uninstall
 InstallRequirement
 req_file
-parse_requirements
-req_requirement
+__all__
+req_install
 RequirementSet
 Requirements
 req_set

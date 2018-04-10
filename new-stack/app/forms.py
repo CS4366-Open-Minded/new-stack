@@ -23,7 +23,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 
 
 class BootstrapRegistrationForm(UserCreationForm):
-    """Registration form which uses bootstrp CSS."""        
+    """Registration form which uses bootstrap CSS."""        
     class Meta(UserCreationForm.Meta):
             model = User
             fields = UserCreationForm.Meta.fields + ('email', 'password1', 'password2')
@@ -100,3 +100,12 @@ class BootstrapRegistrationForm(UserCreationForm):
         user.save()
 
         return user
+
+class VotingInformationForm(forms.Form):
+     """Voting information form."""
+     registered_address = forms.CharField(label=_("Address"),
+                            max_length=254,
+                            widget=forms.TextInput({
+                                'id':'address',
+                                'class': 'form-control',
+                                'placeholder': 'Enter full registered address'}))

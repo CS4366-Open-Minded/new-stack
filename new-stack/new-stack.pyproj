@@ -65,6 +65,7 @@
     <Content Include="app\templates\app\activate-email.html" />
     <Content Include="app\templates\app\account.html" />
     <Content Include="app\templates\app\register.html" />
+    <Content Include="app\templates\app\votinginformation.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

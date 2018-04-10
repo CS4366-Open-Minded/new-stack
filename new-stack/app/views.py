@@ -11,16 +11,15 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
-
-from datetime import datetime
 from django.template.loader import render_to_string
-
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
+
+from datetime import datetime
 import requests
 
 from app.models import Article
-from .forms import BootstrapRegistrationForm
+from .forms import BootstrapRegistrationForm, VotingInformationForm
 from .tokens import account_activation_token
 
 def home(request):
@@ -41,6 +40,26 @@ def home(request):
             'year':datetime.now().year,
         }
     )
+
+def votingPoll(request):
+    """Render the voting information page."""
+    assert isinstance(request, HttpRequest)
+    if request.method == 'POST':
+        votingPollForm = VotingInformationForm(request.POST)
+        if votingPollForm.is_valid():
+            return redirect('poll')
+    else:
+        votingPollForm = VotingInformationForm()
+
+    return render(
+         request,
+         'app/votinginformation.html',
+         {
+             'form': votingPollForm,
+             'title':'Find your polling location',
+             'year':datetime.now().year,
+         }
+     )
 
 def signup(request):
     """Render the signup page."""

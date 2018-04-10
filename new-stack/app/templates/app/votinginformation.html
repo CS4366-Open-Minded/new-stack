@@ -1,0 +1,48 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="search">
+            <form action="poll" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <hr />
+                <div class="form-group">
+                     <div class="col-md-10" id="address">
+                        {{ form.registered_address }}
+                    </div>
+                    <input id="searchTextField" type="text" size="50" placeholder="Anything you want!">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="poll" />
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                 </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+   
+
+    <hr/>
+    <script type="text/javascript" src="https://tool.votinginfoproject.org/app.js"></script> <div id="_vit"></div> <script type="text/javascript">vit.load({
+	    modal: true,
+	    title: 'Voting Information Tool',
+	    width: '640px', height: '480px',
+	    colors: { 'header': '#229acd', 'landscapeBackgroundHeader': '#228a9d' },
+	    language: 'en'
+    });</script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrPLuPUbTyWz8JPHn3D-SpqOA2ASzgGnM&libraries=places&callback=onLoad" async defer></script>
+<script>
+    var onLoad = function() {
+       // I am assuming your field has id of where_load, it might be different
+        var location_input = document.getElementById('searchTextField');
+        var autocomplete = new google.maps.places.Autocomplete(location_input);
+
+    }
+</script>
+
+{% endblock %}

@@ -1,5 +1,5 @@
-absolute_import
-urllib3
-VendorAlias
+unprefixed_mod
+package
+mod
 sys
-chardet
+vendored_package

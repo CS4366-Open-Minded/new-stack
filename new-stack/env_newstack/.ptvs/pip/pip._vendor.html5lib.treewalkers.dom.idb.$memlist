@@ -1,8 +1,6 @@
-Node
 absolute_import
-unicode_literals
-_
-gettext
+Node
 division
 TreeWalker
-_base
+base
+unicode_literals
