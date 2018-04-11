@@ -12,20 +12,49 @@
     background-color: rgba(0,0,0,0.9);
 }
 
-
-.background{
-    background: #f1f1f1;
-    display: block;
-    margin: auto;
-    max-width: 1000px;
+/* contains the the image and all the text elements within a container */
+.wrapper{
+    margin: auto; 
+    position: relative; 
+    width: 70%; 
+    border: 4px solid black; 
+    background-color: #f1f1f1;
 }
 
-.modal-content{
-    display: inline-block;
+/*body of modal */
+.text-content{
+    display: block;
+    width: 100%;
+}
+
+/* Image of modal */
+.img-content{
+    display: block;
     margin: 20px;
     width: 80%;
-    max-width: 300px;
+    max-width: 400px;
+    height: 220px;
+}
+/* Wrapper that contains title, and source credentials (author, url, published date) */
+.article-content{
+    position: relative;
+    height: 240px; 
+    width: 470px; 
+    margin: 10px; 
+    float: right; 
+    /* border: 1px solid green; */
+}
 
+/* Title of modal */
+.title-content{
+    float: left;  
+    position: absolute;
+    top: 0;
+    width: 470px; 
+    word-wrap: normal; 
+    font-size: 20px; 
+    font-style: bold; 
+    color: black;
 }
 
 .close{
@@ -40,4 +69,10 @@
    color: #bbb;
    text-decoration: none;
    cursor: pointer; 
+}
+
+ul, li{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }

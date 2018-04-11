@@ -108,62 +108,32 @@ def htmlRetrieval():
 
 
 def getData(): 
-    htmlRetrieval();
+    #htmlRetrieval()
 
     now = datetime.datetime.now()
-    data = json.load(open("["+str(now.day)+"-"+str(now.month)+"-"+str(now.year)+"].json"))
-    #fullText = data["http://abc13.com/former-tennessee-teacher-pleads-guilty-to-fleeing-with-minor/3306079/"][0]["text"]
+    #data = json.load(open("["+str(now.day)+"-"+str(now.month)+"-"+str(now.year)+"].json"))
+   
     #Retrieve data for backend
     
     response = requests.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=6894e635a38d4de3be2367635985676d")
     response = response.json()
 
-    #check if article exists in database
-    #make a query to the database if title exists in database then no need to store again
+    # check if article exists in database
+    # make a query to the database if title exists in database then no need to store again
     
-    for i in range(0,5):
-        #url = response["articles"][i]["url"]
-        title = response["articles"][i]["title"]
-        if(Article.objects.filter(title=title)):
-            continue
-        url=response["articles"][i]["url"]
-        fullText = data[url][0]["text"]
-        Article.objects.create(title=response["articles"][i]["title"], author=response["articles"][i]["author"], description=response["articles"][i]["description"], urlImage=response["articles"][i]["urlToImage"], url=url, source=response["articles"][i]["source"]["name"], text=fullText)
+    #for i in range(0,12):
+        # title = response["articles"][i]["title"]
+        # if(Article.objects.filter(title=title)):
+        #     continue
+        # url=response["articles"][i]["url"]
+        # fullText = data[url][0]["text"]
+        # Article.objects.create(title=response["articles"][i]["title"], author=response["articles"][i]["author"], description=response["articles"][i]["description"], urlImage=response["articles"][i]["urlToImage"], url=url, source=response["articles"][i]["source"]["name"], text=fullText, publishedOn=response["articles"][i]["publishedAt"])
 
     context = Article.objects.all().order_by('-id')[:12]
     #context = Article.objects.all()[:12]
     Articles = {
         'Articles': context
     }
-
-    # sourceName = []
-    # author = []
-    # title = []
-    # description = []
-    # url = []
-    # urlImage = []
-    # publishedAt = []
-
-
-    # for i in range(0,19):
-    #     sourceName.append(response["articles"][i]["source"]["name"]) 
-    #     author.append(response["articles"][i]["author"]) 
-    #     title.append(response["articles"][i]["title"])
-    #     description.append(response["articles"][i]["description"])
-    #     url.append(response["articles"][i]["url"])
-    #     urlImage.append(response["articles"][i]["urlToImage"])
-    #     publishedAt.append(response["articles"][i]["publishedAt"])
-    
-    # Article = {
-    #     'Source': sourceName,
-    #     'Author': author,
-    #     'Title': title,
-    #     'Description': description,
-    #     'Url': url,
-    #     'UrlImage': urlImage,
-    #     'PublishedAt': publishedAt,
-    #     'range': range(10)
-    # }
     return Articles
 
 

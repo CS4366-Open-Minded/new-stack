@@ -24,10 +24,20 @@
         <div id={{article.id}} class="modal">
             <span class="close"> &times; </span>
             
-            <div class="background">
-                <img class="modal-content" id="img{{article.id}}">
-                <div style="padding: 20px; text-align: justify" id="text{{article.id}}"></div>
-                <div style="padding: 20px;" id="reference{{article.id}}"></div>
+            <div class="wrapper">
+                <div class="article-content">
+                    <h5 id="modalTitle{{article.id}}" class="title-content" ></h5>
+                    <ul style="position: absolute; bottom: 0;">
+                        <li>  <h5 id="reference{{article.id}}"></h5> </li>
+                        <li> <div > <a id="url{{article.id}}" target="_blank" text-decoration: "none" href="">Source</a> </div></li>
+                        <li> <h5 id="published{{article.id}}"></h5> </li>
+                    </ul>
+                </div>
+                <img class="img-content" id="img{{article.id}}">
+                <div class="text-content">
+                    <p style="padding: 20px; text-align: justify" id="text{{article.id}}"></p>
+                    
+                </div>
             </div>
         </div>
 
@@ -39,12 +49,18 @@
             img.style.cursor = "pointer";
             var caption = document.getElementById('text{{article.id}}');
             var author = document.getElementById('reference{{article.id}}');
-
+            var title = document.getElementById('modalTitle{{article.id}}');
+            var url = document.getElementById('url{{article.id}}');
+            var published = document.getElementById('published{{article.id}}');
             img.onclick = function(){
                 modal.style.display = "block";
                 modalImg.src = '{{article.urlImage}}';
+                title.innerHTML = '{{article.title}}';
                 caption.innerHTML = '{{article.text}}';
                 author.innerHTML = 'Author:'+' {{article.author}}';
+                url.setAttribute("href",'{{article.url}}');
+                url.innerHTML = '{{article.source}}';
+                published.innerHTML = '{{article.publishedOn}}';
             }
             
             window.onclick = function(event){
