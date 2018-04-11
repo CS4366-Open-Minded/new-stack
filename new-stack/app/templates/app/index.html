@@ -25,17 +25,18 @@
             <span class="close"> &times; </span>
             
             <div class="wrapper">
+                <img class="img-content" id="img{{article.id}}">
                 <div class="article-content">
                     <h5 id="modalTitle{{article.id}}" class="title-content" ></h5>
-                    <ul style="position: absolute; bottom: 0;">
+                    <ul class="source">
                         <li>  <h5 id="reference{{article.id}}"></h5> </li>
                         <li> <div > <a id="url{{article.id}}" target="_blank" text-decoration: "none" href="">Source</a> </div></li>
                         <li> <h5 id="published{{article.id}}"></h5> </li>
                     </ul>
                 </div>
-                <img class="img-content" id="img{{article.id}}">
+                
                 <div class="text-content">
-                    <p style="padding: 20px; text-align: justify" id="text{{article.id}}"></p>
+                    <p style="margin: 10px; text-align: justify" id="text{{article.id}}"></p>
                     
                 </div>
             </div>

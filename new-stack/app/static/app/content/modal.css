@@ -16,32 +16,33 @@
 .wrapper{
     margin: auto; 
     position: relative; 
-    width: 70%; 
+    width: 900px; 
     border: 4px solid black; 
     background-color: #f1f1f1;
 }
 
 /*body of modal */
 .text-content{
-    display: block;
     width: 100%;
+    clear: both;
 }
 
 /* Image of modal */
 .img-content{
-    display: block;
-    margin: 20px;
+    float: left;
+    margin: 10px;
     width: 80%;
     max-width: 400px;
     height: 220px;
+    /* border: 1px solid red; */
 }
 /* Wrapper that contains title, and source credentials (author, url, published date) */
 .article-content{
+    float: right;
     position: relative;
     height: 240px; 
-    width: 470px; 
-    margin: 10px; 
-    float: right; 
+    width: 50%; 
+    margin: 3px;
     /* border: 1px solid green; */
 }
 
@@ -50,11 +51,12 @@
     float: left;  
     position: absolute;
     top: 0;
-    width: 470px; 
+    width: 100%; 
     word-wrap: normal; 
     font-size: 20px; 
     font-style: bold; 
     color: black;
+    /* border: 1px solid red; */
 }
 
 .close{
@@ -71,8 +73,36 @@
    cursor: pointer; 
 }
 
-ul, li{
+.source, li{
     margin: 0;
     padding: 0;
     list-style-type: none;
+    /* border: 1px solid sandybrown; */
+}
+
+.source{
+    position: absolute; bottom: 1px;
+}
+
+@media (max-width: 700px){
+    .wrapper{
+        width: 400px;
+        margin: auto;
+    }
+    .article-content{
+        float: none;
+        clear: both;
+        width: 90%;
+        height: 150px;
+        margin: auto;
+    }
+    .img-content{
+        float: none;
+        width: 100%;
+        margin: auto;
+        clear: both;
+    }
+    .title-content{
+        float: none;
+    }
 }
