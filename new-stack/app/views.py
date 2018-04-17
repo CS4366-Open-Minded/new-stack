@@ -131,6 +131,8 @@ def getData():
     articleContent = Article.objects.order_by('-id')
     factContent = FactCheck.objects.all().order_by('-id')
 
+
+
     Articles = {
         'Article': articleContent,
         'factCheck': factContent,
