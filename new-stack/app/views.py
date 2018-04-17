@@ -36,6 +36,7 @@ from .tokens import account_activation_token
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from app.forms import BootstrapRegistrationForm
+from nltk import tokenize
 
 def home(request):
     """Renders the home page."""
@@ -138,12 +139,24 @@ def getArticles():
 
 def getData(): 
     #getArticles()
+
+    articlesSentences = {}
     
-    articleContent = Article.objects.order_by('-id')
+    articles = Article.objects.order_by('-id')
     factContent = FactCheck.objects.all().order_by('-id')
 
+    for article in articles:
+        articleID = article.id
+        articlesSentences[articleID] = {}
+        
+        sentences = tokenize.sent_tokenize(article.text)
+        for i in range(len(sentences)):
+            articlesSentences[articleID][str(i)] = sentences[i]
+
+        print(articlesSentences)
+
     Articles = {
-        'Article': articleContent,
+        'Article': articles,
         'factCheck': factContent,
     }
     return Articles
