@@ -76,4 +76,16 @@ class Article(models.Model):
     url = models.URLField(max_length=200)
     urlImage = models.URLField(max_length=200, null=True)
     publishedOn = models.CharField(max_length=200)
+    sentimentResult = models.CharField(max_length=100, null=True)
 
+class FactCheck(models.Model):
+    url = models.URLField()
+    sentenceNumber = models.IntegerField()
+    URLFact = models.URLField()
+    similarityPercentage = models.DecimalField(max_digits=4, decimal_places=4)
+    article = models.ForeignKey('Article')
+
+# class Sentiment(models.Model):
+#     sentimentResult = models.CharField(max_length=100, null=True)
+#     url = models.URLField()
+    #article = models.ForeignKey('Article', null=True)

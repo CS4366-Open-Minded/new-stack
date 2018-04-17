@@ -1,0 +1,6 @@
+['search', 'ask', 'question', 'zone', 'customer', 'support']
+['copyright', '2000', 'var', 'copyd', 'new', 'datedocument_writecopyd_getfullyear', 'salesforce_com', 'inc']
+['rights', 'reserved']
+['various', 'trademarks', 'held', 'respective', 'owners']
+['landmark', 'one', 'market', 'st']
+['suite', '300', 'san', 'francisco', '94105', 'united', 'states', 'find', 'looking', 'contact', 'salesforce', 'customer', 'support']

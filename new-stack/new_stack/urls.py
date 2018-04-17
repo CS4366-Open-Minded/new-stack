@@ -36,6 +36,7 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
+    url(r'^search/$', app.views.search, name='search')
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

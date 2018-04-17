@@ -42,14 +42,32 @@ input[type="checkbox"].input-validation-error {
 }
 .card{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-	transition: 0.3s;
+	transition: 0.5s;
     border-radius: 5px; 
     overflow: hidden;
+    position: relative;
+    backface-visibility: hidden;
+    opacity: 1;
 }
 
 .card:hover{
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    opacity: 1;
 }
+
+.card:hover .overlay{
+    opacity: 1;
+}
+
+.overlay{
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-10%, -30%);
+}
+
 
 .grid{
     display: grid;
@@ -80,6 +98,10 @@ h1{
 
 p{
     margin: 10px;
+}
+
+.overlay{
+    
 }
 
 @media (min-width: 700px){
