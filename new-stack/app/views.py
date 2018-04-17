@@ -3,7 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib import messages
@@ -16,14 +16,25 @@ import string
 import json
 import sys
 import os
-import datetime
+from datetime import datetime
 from nltk.corpus import stopwords
 from concept_extraction import concept_extractor
 from concept_compare import concept_checker
-from Vader_Sentiment_Analyzer import Vader_Sentiment 
+from Vader_Sentiment_Analyzer import Vader_Sentiment
 
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from app.forms import BootstrapRegistrationForm
 
 def home(request):
@@ -144,8 +155,22 @@ def signup(request):
     if request.method == 'POST':
         regform = BootstrapRegistrationForm(request.POST)
         if regform.is_valid():
-            regform.save()
-            messages.success(request, "Account created successfully!")
+            user = regform.save()
+
+            # Send activation email to user
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your NEWSTACK account.'
+            message = render_to_string('app/activate-email.html', {
+                'user':user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+                })
+            to_email = regform.cleaned_data['email']
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+
+            messages.success(request, "Account created successfully! Please confirm your email address to complete registration.")
             return redirect('register')
     else:
             regform = BootstrapRegistrationForm()
@@ -159,6 +184,20 @@ def signup(request):
             'year':datetime.now().year,
             }
         )
+
+def activateAccount(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return HttpResponse('Thank you for your email confirmation. Now you can sign in to your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 def contact(request):
     """Renders the contact page."""

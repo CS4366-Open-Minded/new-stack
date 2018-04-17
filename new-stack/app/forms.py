@@ -8,8 +8,6 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, User
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from .models import STATE_CHOICES
-
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses bootstrap CSS."""
     username = forms.CharField(max_length=254,
@@ -23,7 +21,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 
 
 class BootstrapRegistrationForm(UserCreationForm):
-    """Registration form which uses bootstrp CSS."""        
+    """Registration form which uses bootstrap CSS."""        
     class Meta(UserCreationForm.Meta):
             model = User
             fields = UserCreationForm.Meta.fields + ('email', 'password1', 'password2')
@@ -72,6 +70,7 @@ class BootstrapRegistrationForm(UserCreationForm):
                 self.error_messages['email_exists'],
                 code='email_exists',
                 )
+        return email
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -86,8 +85,16 @@ class BootstrapRegistrationForm(UserCreationForm):
         return password2
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
+        #user = super(UserCreationForm, self).save(commit=False)
+        #user.set_password(self.cleaned_data["password1"])
+        #if commit:
+        #    user.save()
+
+        # Create user
+        user = User.objects.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], password=self.cleaned_data['password1'])
+        
+        # Make user inactive
+        user.is_active = False
+        user.save()
+
         return user
