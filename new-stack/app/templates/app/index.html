@@ -6,53 +6,62 @@
     <div class="front-door-banner">
         <h1 class="front-door-banner__header">NEWS YOU CAN TRUST</h1>
         <h2 class="front-door-banner__subheader">Politics on the rise</h2>
-        <p style="text-align: center"><a href="{% url 'register' %}" class="btn btn-primary btn-large">Sign Up</a></p>
-     </div>
+        <p style="text-align: center"><a href="{% url 'register' %}" class="btn
+                btn-primary btn-large">Sign Up</a></p>
+    </div>
 </div>
 
 <hr/>
 
-
     <div class="grid">
-    {% for article in Articles %}
-        <div id="card{{article.id}}"class="card" style="position:relative;">
-            <img id="myImg{{article.id}}" class="urlImage" src={{article.urlImage}} /> 
+            
+        {% for article in Article %}
+        <div id="card{{article.id}}" class="card" style="position:relative;">
+            <img id="myImg{{article.id}}" class="urlImage"
+                src={{article.urlImage}} />
             <h4 id="title{{article.id}}"> {{article.title}}</h4>
             <p>{{article.description}}</p>
+            <div class="overlay">
+                <button type="button"> save </button>
+                <button type="button"> share </button>
+            </div>
         </div>
 
         <div id={{article.id}} class="modal">
-            <span class="close"> &times; </span>
-            
+            <span id="span{{article.id}}"class="close"> &times; </span>
             <div class="wrapper">
                 <img class="img-content" id="img{{article.id}}">
                 <div class="article-content">
-                    <h5 id="modalTitle{{article.id}}" class="title-content" ></h5>
+                    <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
+                    <h4 id="sentiment{{article.id}}" style="margin-top: 100px;"></h4>
+                </div>
+                <div class="paragraph-content">
+                    <h4 style="margin: 10px; text-align: justify"
+                        id="text{{article.id}}"></h4>
+                </div>
+            <div>
                     <ul class="source">
-                        <li>  <h5 id="reference{{article.id}}"></h5> </li>
-                        <li> <div > <a id="url{{article.id}}" target="_blank" text-decoration: "none" href="">Source</a> </div></li>
+                        <li> <h5 id="reference{{article.id}}"></h5> </li>
+                        <li> <div> <a id="url{{article.id}}" target="_blank"
+                                    text-decoration:" none" href="">Source</a>
+                            </div></li>
                         <li> <h5 id="published{{article.id}}"></h5> </li>
                     </ul>
-                </div>
-                
-                <div class="text-content">
-                    <p style="margin: 10px; text-align: justify" id="text{{article.id}}"></p>
-                    
                 </div>
             </div>
         </div>
 
         <script>
-            
             var modal = document.getElementById('{{article.id}}');
             var modalImg = document.getElementById('img{{article.id}}');
-            var img = document.getElementById('card{{article.id}}');
+            var img = document.getElementById('myImg{{article.id}}');
             img.style.cursor = "pointer";
             var caption = document.getElementById('text{{article.id}}');
             var author = document.getElementById('reference{{article.id}}');
             var title = document.getElementById('modalTitle{{article.id}}');
             var url = document.getElementById('url{{article.id}}');
             var published = document.getElementById('published{{article.id}}');
+            var sentiment = document.getElementById('sentiment{{article.id}}');
             img.onclick = function(){
                 modal.style.display = "block";
                 modalImg.src = '{{article.urlImage}}';
@@ -61,7 +70,8 @@
                 author.innerHTML = 'Author:'+' {{article.author}}';
                 url.setAttribute("href",'{{article.url}}');
                 url.innerHTML = '{{article.source}}';
-                published.innerHTML = '{{article.publishedOn}}';
+                published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
+                sentiment.innerHTML = '{{article.sentimentResult}}';
             }
             
             window.onclick = function(event){
@@ -70,13 +80,31 @@
                 }
             }
 
-            // var span = document.getElementsByClassName("close")[i+1];
-            // console.log(span);
-            // span.onclick = function(){
-            //     modal.style.display = "none";
-            // }
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function(){
+                modal.style.display = "none";
+            }
         </script>
-    {%endfor%}
+        {%endfor%}
     </div>
 
-{% endblock %}
+    <!-- <div class="pagination">
+        <span class="step-links">
+            {% if Articles.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{Articles.previous_page_number}}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{Articles.number}} of {{Articles.paginator.num_pages}}.
+            </span>
+
+            {% if Articles.has_next %}
+            <a href="?page={{Articles.next_page_number}}">next</a>
+            <a href="?page={{Articles.paginator.num_pages}}">last &raquo;</a>
+            {% endif%}
+        </span>
+    </div>> -->
+
+
+    {% endblock %}

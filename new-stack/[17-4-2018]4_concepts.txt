@@ -1,0 +1,4 @@
+['former', 'first', 'lady', 'barbara', 'bush', 'failing', 'health', 'according', 'family', 'spokesman', 'seek', 'additional', 'medical', 'treatment', 'instead', 'remains', 'home', 'loved', 'ones', 'focused', 'comfort', 'care']
+['watch', 'tv', 'shows', 'movies', 'yahoo', 'view']
+['andrea', 'mitchell', 'reports', 'andrea', 'mitchell', 'nbc', 'news', 'chief', 'foreign', 'affairs', 'correspondent', 'regularly', 'appears', 'nbc', 'nightly', 'news', 'brian', 'williams', 'today', 'meet', 'press']
+['program', 'includes', 'indepth', 'interviews', 'dc', 'world', 'newsmakers', 'covers', 'many', 'international', 'news', 'topics']

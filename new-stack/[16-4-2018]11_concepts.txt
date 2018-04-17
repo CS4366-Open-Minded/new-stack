@@ -1,0 +1,3 @@
+['dana', 'bash', 'ted', 'barrett', 'cnn', 'updated', '847', 'pm', 'mon', 'april', '16', '2018', 'chat', 'facebook', 'messenger']
+['find', 'happening', 'world', 'unfolds']
+['cnnarizona', 'republican', 'sen']

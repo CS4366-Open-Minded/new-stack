@@ -1,0 +1,3 @@
+['set', 'edition', 'preference', 'set', 'edition', 'preference', 'set', 'edition', 'preference', 'emanuella', 'grinberg', 'sara', 'weisfeldt', 'cnn', 'updated', '1104', 'pm', 'mon', 'april', '16', '2018', 'chat', 'facebook', 'messenger']
+['find', 'happening', 'world', 'unfolds']
+['denver', 'cnninspired', 'teachers', 'states', 'colorado', 'educators', 'brought', 'demands', 'funding', 'state', 'capitol', 'monday', 'others', 'gathered', 'districts', 'across', 'state', 'organizers', 'say', 'getting', 'started']
