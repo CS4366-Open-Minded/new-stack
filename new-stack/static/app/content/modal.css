@@ -10,6 +10,7 @@
     overflow: auto; /* Enable scroll if modal is larger than window */
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.9);
+
 }
 
 /* contains the the image and all the text elements within a container */
@@ -27,7 +28,7 @@
     margin: 25px;
     width: 80%;
     max-width: 400px;
-    height: 220px;
+    height: 250px;
     /* border: 1px solid red; */
 }
 /* Works as a wrapper that contains title */
@@ -88,8 +89,6 @@ li{
    text-decoration: none;
    cursor: pointer; 
 }
-
-
 
 
 @media (max-width: 700px){

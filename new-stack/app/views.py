@@ -110,7 +110,7 @@ def getArticles():
             
             sentiment = Vader_Sentiment(text)
 
-            Article.objects.create(title=title, author=author, description=description, urlImage=urlImage, url=url, source=source, text=text, publishedOn=publishedAt, sentimentResult=sentiment)
+            Article.objects.create(title=title, author=author, description=description, urlImage=urlImage, url=url, source=source, text=text, publishedOn=publishedAt, sentimentNeg=sentiment["neg"], sentimentNeu=sentiment["neu"], sentimentPos=sentiment["pos"])
 
             #query to get current article id for foreign key reference to FactCheck
             query = Article.objects.get(title=title)            
@@ -130,8 +130,6 @@ def getData():
     
     articleContent = Article.objects.order_by('-id')
     factContent = FactCheck.objects.all().order_by('-id')
-
-
 
     Articles = {
         'Article': articleContent,

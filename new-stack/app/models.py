@@ -76,7 +76,9 @@ class Article(models.Model):
     url = models.URLField(max_length=200)
     urlImage = models.URLField(max_length=200, null=True)
     publishedOn = models.CharField(max_length=200)
-    sentimentResult = models.CharField(max_length=100, null=True)
+    sentimentNeg = models.CharField(max_length=100, null=True)
+    sentimentNeu = models.CharField(max_length=100, null=True)
+    sentimentPos = models.CharField(max_length=100, null=True)
 
 class FactCheck(models.Model):
     url = models.URLField()
