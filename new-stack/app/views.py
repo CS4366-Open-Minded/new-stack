@@ -8,7 +8,7 @@ from django.template import RequestContext
 from datetime import datetime
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Article,FactCheck
+from .models import Article,FactCheck,searchArticle
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -227,9 +227,69 @@ def about(request):
 
 
 def search(request):
+    searchArticle.objects.all().delete()
     query = request.GET.get('search')
+    data = requests.get('https://newsapi.org/v2/top-headlines?country=us&q='+str(query)+'&apiKey=6894e635a38d4de3be2367635985676d').json()
+    #print(response)
+    if(data["articles"] == []):
+        message = "No results found for "+query
+        result = {
+            'message': message
+        }
+        return render(request, 'app/search.html', result)
+    
+    url = []
+    texthold = []
+    titlehold = []
 
+    for z in range(0, len(data["articles"])):
+        url.append(data["articles"][z]["url"])
+
+    session = requests.session()
+    for site in url:
+        req = session.get(site)
+        doc = BeautifulSoup(req.content, 'html.parser')
+        title = doc.title
+        txt = doc.findAll('p')
+
+        clean = re.compile('<.*?>')
+
+        cleantext = clean.sub('', str(txt))
+        cleantext = cleantext.replace("\\n", "").replace("\\r", "").replace("\\t", "")
+        cleantext = unicode(cleantext).decode('unicode_escape').encode('ascii', 'ignore')
+        texthold.append(cleantext.replace("\"", "").replace(".,", ".").replace("?,", ".").replace("!,", "."))
+        
+        cleantitle = clean.sub('', str(title))
+        cleantitle = cleantitle.replace("\\n", "").replace("\\r", "").replace("\\t", "")
+        cleantitle = cleantitle.decode('utf-8').encode('utf-8')
+        cleantitle = cleantitle.decode('unicode_escape').encode('ascii', 'ignore')
+        cleantitle = cleantitle.replace("\"", "").replace(".,", ".").replace("?,", ".").replace("!,", ".")
+        titlehold.append(cleantitle.translate(None, '\n|\\":\'?\"'))
+
+
+
+    for z in range(0, len(data["articles"])):
+        urlImage = data["articles"][z]["urlToImage"]
+        if(urlImage == None):
+            continue
+        title = titlehold[z]
+        if(searchArticle.objects.filter(title=title)):
+            continue
+        description = data["articles"][z]["description"]
+        author = data["articles"][z]["author"]
+        publishedAt = data["articles"][z]["publishedAt"]
+        source = data["articles"][z]["source"]["name"]
+        url = data["articles"][z]["url"]
+        text = (" ".join(texthold[z].split())).replace(" ,","")
+            
+        sentiment = Vader_Sentiment(text)
+
+        searchArticle.objects.create(title=title, author=author, description=description, urlImage=urlImage, url=url, source=source, text=text, publishedOn=publishedAt, sentimentNeg=sentiment["neg"], sentimentNeu=sentiment["neu"], sentimentPos=sentiment["pos"])
+
+    Articles = searchArticle.objects.all()           
+        
     result = {
         'query': query,
+        'Articles': Articles
     }
     return render(request, 'app/search.html', result)

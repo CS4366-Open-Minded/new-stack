@@ -1,20 +1,7 @@
 {% extends "app/layout.html" %}
 
+
 {% block content %}
-
-<div class="jumbotron" style="background-color:transparent; height:550px">
-    <div class="front-door-banner">
-        <h1 class="front-door-banner__header">NEWS YOU CAN TRUST</h1>
-        <h2 class="front-door-banner__subheader">Politics on the rise</h2>
-        {% if not user.is_authenticated %}
-        <p style="text-align: center"><a href="{% url 'register' %}" class="btn
-                btn-primary btn-large">Sign Up</a></p>
-        {% endif %}
-    </div>
-</div>
-
-<hr/>
-
     <div class="grid">
             
         {% for article in Article %}
@@ -30,14 +17,14 @@
         </div>
 
         <div id={{article.id}} class="modal">
-            <span id="span{{article.id}}" class="close"> &times; </span>
             <div class="wrapper">
+                <button type="button" class="btn btn-info" id="closeButton" onclick="modal.style.display='none';">x</button>
                 <img class="img-content" id="img{{article.id}}">
                 <div class="article-content">
                     <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
                     <div style="margin-top:180px">
                         <h4 id="sentimentNeg{{article.id}}" style="color:red;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif""> </h4>
+                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif"> </h4>
                         <h4 id="sentimentPos{{article.id}}" style="color:green;font-family:'Times New Roman', Times, serif"> </h4>
                     </div>
                 </div>
