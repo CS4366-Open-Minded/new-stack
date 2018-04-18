@@ -21,7 +21,7 @@
         <div id="card{{article.id}}" class="card" style="position:relative;">
             <img id="myImg{{article.id}}" class="urlImage"
                 src={{article.urlImage}} />
-            <h4 id="title{{article.id}}"> {{article.title}}</h4>
+            <h4 id="title{{article.id}}" style="font-weight:bold"> {{article.title}}</h4>
             <p>{{article.description}}</p>
             <div class="overlay">
                 <button type="button"> save </button>
@@ -36,9 +36,9 @@
                 <div class="article-content">
                     <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
                     <div style="margin-top:180px">
-                        <h4 id="sentimentNeg{{article.id}}" style="color:red;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentPos{{article.id}}" style="color:green;font-family:'Times New Roman', Times, serif"> </h4>
+                        <h4 id="sentimentNeg{{article.id}}" style="color:red;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
+                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
+                        <h4 id="sentimentPos{{article.id}}" style="color:green;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
                     </div>
                 </div>
                 <div class="paragraph-content">
@@ -83,19 +83,38 @@
                 title.innerHTML = '{{article.title}}';
             
                 content.innerHTML = "";
-
+                
+                var similarity;
                 if(content.childElementCount == 0){
                     for(var i = 0; i < sentences.length; i++){
+                        var temp = i + 1;
+                        var temp2;
+                        similarity = 0;
+
+                        {% for fact in factCheck %}
+                            
+                            {% if fact.article.id == article.id %}
+                                  temp2 = '{{fact.sentenceNumber}}';
+                                if(temp == temp2){
+                                    similarity = '{{fact.similarityPercentage}}';
+                                }
+                            {% endif %}
+                        {% endfor %}
+                        
                         var txt = sentences[i];
                         txt = txt.replace("[", "");
                         txt = txt.replace("]", "");
                         var sentence = null;        
                         sentence = document.createElement('span');
                         sentence.id = '{{artcle.id}}' + i;
+                        if(similarity > 0){
+                            sentence.style = "color:green;font-weight:bold";
+                        }
                         sentence.innerHTML = txt + " ";
                         content.append(sentence);
                      }
-                    }
+                   }
+
                 
                 author.innerHTML = 'Author:'+' {{article.author}}';
                 url.setAttribute("href",'{{article.url}}');

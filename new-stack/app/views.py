@@ -53,7 +53,7 @@ def home(request):
     )
 
 def getArticles():
-    now = datetime.datetime.now()
+    now = datetime.now()
 
     with open('custom_stopwords.txt') as e:
         stopwordList=e.read()+','.join(set(stopwords.words('english')))
@@ -133,16 +133,21 @@ def getArticles():
                     similarityPercentage = pList[i-1]
                     if uList[i-1] > -1:
                         URLFact = urlHolder[uList[i-1]]
-                    FactCheck.objects.create(url=url, sentenceNumber=sentenceNumber, similarityPercentage=similarityPercentage, URLFact=URLFact, article_id=query.id)
+                    FactCheck.objects.create(url=url, sentence=sList[sentenceNumber],sentenceNumber=sentenceNumber, similarityPercentage=similarityPercentage, URLFact=URLFact, article_id=query.id)
 
 
 
 def getData(): 
     #getArticles()
     
+    factContent = []
+
     articles = Article.objects.order_by('-id')
-    factContent = FactCheck.objects.all().order_by('-id')
-    
+    facts = FactCheck.objects.all().order_by('-id')
+
+    for fact in facts:
+        factContent.append(fact)
+        
     Articles = {
         'Article': articles,
         'factCheck': factContent,
