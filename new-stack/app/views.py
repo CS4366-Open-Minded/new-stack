@@ -114,6 +114,28 @@ def getArticles():
             description = data["articles"][z]["description"]
             author = data["articles"][z]["author"]
             publishedAt = data["articles"][z]["publishedAt"]
+
+            t = 'T'
+            z = 'Z'
+            date = ''
+            time = ''
+
+            for i in publishedAt:
+                if i == t:
+                    break
+                date += i
+            
+            timestart = text.find(t)
+            timeEnd = text.find(z)
+
+            for i in range(timestart+1, timeEnd):
+                time += text[i]
+            
+            d = datetime.strptime(time, "%H:%M:%S")
+            d = d.strftime("%I:%M:%S")
+
+            publishedAt = date+' '+d
+
             source = data["articles"][z]["source"]["name"]
             
             url = data["articles"][z]["url"]

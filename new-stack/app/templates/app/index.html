@@ -11,25 +11,39 @@
             <h4 id="title{{article.id}}"> {{article.title}}</h4>
             <p>{{article.description}}</p>
             <div class="overlay">
-                <button type="button"> save </button>
-                <button type="button"> share </button>
+                <button type="button" onclick="saveFunction()"> save </button>
+                <button type="button" onclick="shareFunction()"> share </button>
             </div>
         </div>
 
+        {% if user.is_authenticated %}
+        
+        {% else %}
+        <script>
+            function saveFunction() {
+                alert("Please sign in to save an article.");
+            }
+            function shareFunction(){
+                alert("Please sign in to share an article.");
+            }
+        </script>
+
+        {% endif %}
+
         <div id={{article.id}} class="modal">
             <div class="wrapper">
-                <button type="button" class="btn btn-info" id="closeButton" onclick="modal.style.display='none';">x</button>
+                <button class="btn btn-info"type="button" id="closeButton" onclick="modal.style.display='none';">close</button>
                 <img class="img-content" id="img{{article.id}}">
                 <div class="article-content">
                     <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
-                    <div style="margin-top:180px">
+                    <div class="sentiment">
                         <h4 id="sentimentNeg{{article.id}}" style="color:red;font-family:'Times New Roman', Times, serif"> </h4>
                         <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif"> </h4>
                         <h4 id="sentimentPos{{article.id}}" style="color:green;font-family:'Times New Roman', Times, serif"> </h4>
                     </div>
                 </div>
                 <div class="paragraph-content">
-                    <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif";
+                    <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif;"
                         id="text{{article.id}}"></h4>
                 </div>
             <div>
@@ -56,8 +70,8 @@
             var published = document.getElementById('published{{article.id}}');
             var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
             var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
-             var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
-            var sentiment = document.getElementById('sentiment{{article.id}}');
+            var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
+
             img.onclick = function(){
                 modal.style.display = "block";
                 modalImg.src = '{{article.urlImage}}';
@@ -76,11 +90,6 @@
                 if (event.target == modal){
                     modal.style.display = "none";
                 }
-            }
-
-            var span = document.getElementsByClassName("close")[0];
-            span.onclick = function(){
-                modal.style.display = "none";
             }
         </script>
         {%endfor%}
