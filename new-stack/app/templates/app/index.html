@@ -37,12 +37,12 @@
                     <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
                     <div style="margin-top:180px">
                         <h4 id="sentimentNeg{{article.id}}" style="color:red;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif""> </h4>
+                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-family:'Times New Roman', Times, serif"> </h4>
                         <h4 id="sentimentPos{{article.id}}" style="color:green;font-family:'Times New Roman', Times, serif"> </h4>
                     </div>
                 </div>
                 <div class="paragraph-content">
-                    <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif";
+                    <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif" 
                         id="text{{article.id}}"></h4>
                 </div>
             <div>
@@ -62,20 +62,41 @@
             var modalImg = document.getElementById('img{{article.id}}');
             var img = document.getElementById('myImg{{article.id}}');
             img.style.cursor = "pointer";
-            var caption = document.getElementById('text{{article.id}}');
+            var content = document.getElementById('text{{article.id}}');
             var author = document.getElementById('reference{{article.id}}');
             var title = document.getElementById('modalTitle{{article.id}}');
             var url = document.getElementById('url{{article.id}}');
             var published = document.getElementById('published{{article.id}}');
             var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
             var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
-             var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
+            var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
             var sentiment = document.getElementById('sentiment{{article.id}}');
+            
             img.onclick = function(){
+                 var str = "";
+                 str = '{{article.text}}';
+                 var sentences = [];
+                 sentences = str.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");    
+
                 modal.style.display = "block";
                 modalImg.src = '{{article.urlImage}}';
                 title.innerHTML = '{{article.title}}';
-                caption.innerHTML = '{{article.text}}';
+            
+                content.innerHTML = "";
+
+                if(content.childElementCount == 0){
+                    for(var i = 0; i < sentences.length; i++){
+                        var txt = sentences[i];
+                        txt = txt.replace("[", "");
+                        txt = txt.replace("]", "");
+                        var sentence = null;        
+                        sentence = document.createElement('span');
+                        sentence.id = '{{artcle.id}}' + i;
+                        sentence.innerHTML = txt + " ";
+                        content.append(sentence);
+                     }
+                    }
+                
                 author.innerHTML = 'Author:'+' {{article.author}}';
                 url.setAttribute("href",'{{article.url}}');
                 url.innerHTML = '{{article.source}}';

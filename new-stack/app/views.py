@@ -139,22 +139,10 @@ def getArticles():
 
 def getData(): 
     #getArticles()
-
-    articlesSentences = {}
     
     articles = Article.objects.order_by('-id')
     factContent = FactCheck.objects.all().order_by('-id')
-
-    for article in articles:
-        articleID = article.id
-        articlesSentences[articleID] = {}
-        
-        sentences = tokenize.sent_tokenize(article.text)
-        for i in range(len(sentences)):
-            articlesSentences[articleID][str(i)] = sentences[i]
-
-        print(articlesSentences)
-
+    
     Articles = {
         'Article': articles,
         'factCheck': factContent,
