@@ -106,8 +106,8 @@
                         var sentence = null;        
                         sentence = document.createElement('span');
                         sentence.id = '{{artcle.id}}' + i;
-                        if(similarity > 0){
-                            sentence.style = "color:green;";
+                        if(similarity > 0.30){
+                            sentence.style = "color:green;font-weight:bold";
                             sentence.style.cursor = "pointer";
                             sentence.onclick=function(s=similarity, url=urlFact){
                                window.alert("Similarity: " + s + " | " + "Fact URL: " + url); 
