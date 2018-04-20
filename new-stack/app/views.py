@@ -160,7 +160,7 @@ def getArticles():
 
 
 def getData(): 
-    #getArticles()
+    getArticles()
     
     factContent = []
 

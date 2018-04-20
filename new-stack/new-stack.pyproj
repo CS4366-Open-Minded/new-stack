@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\app\activate-email.html" />
-    <Content Include="app\templates\app\index2.html" />
     <Content Include="app\templates\app\register.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
