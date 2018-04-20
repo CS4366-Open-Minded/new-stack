@@ -79,3 +79,23 @@ class FactCheck(models.Model):
     URLFact = models.URLField()
     similarityPercentage = models.DecimalField(max_digits=4, decimal_places=4)
     article = models.ForeignKey('Article')
+
+# class Sentiment(models.Model):
+#     sentimentResult = models.CharField(max_length=100, null=True)
+#     url = models.URLField()
+    #article = models.ForeignKey('Article', null=True)
+
+#temporary table to store search results in
+#will make implementation simpler for now
+class searchArticle(models.Model):
+    source = models.CharField(max_length=200)
+    author = models.CharField(max_length=200, null=True)
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True)
+    text = models.CharField(max_length=400)
+    url = models.URLField(max_length=200)
+    urlImage = models.URLField(max_length=200, null=True)
+    publishedOn = models.CharField(max_length=200)
+    sentimentNeg = models.CharField(max_length=100, null=True)
+    sentimentNeu = models.CharField(max_length=100, null=True)
+    sentimentPos = models.CharField(max_length=100, null=True)
