@@ -44,6 +44,7 @@
     </Compile>
     <Compile Include="app\Vader_Sentiment_Analyzer.py" />
     <Compile Include="app\views.py" />
+    <Compile Include="app\voting_information.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />
@@ -67,6 +68,7 @@
   <ItemGroup>
     <Content Include="app\templates\app\activate-email.html" />
     <Content Include="app\templates\app\register.html" />
+    <Content Include="app\templates\app\voting-information.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

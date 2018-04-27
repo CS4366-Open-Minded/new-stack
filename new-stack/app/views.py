@@ -16,11 +16,11 @@ import string
 import json
 import sys
 import os
-from datetime import datetime
 from nltk.corpus import stopwords
 from concept_extraction import concept_extractor
 from concept_compare import concept_checker
 from Vader_Sentiment_Analyzer import Vader_Sentiment
+from voting_information import get_upcoming_election
 
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -38,6 +38,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from app.forms import BootstrapRegistrationForm
 from nltk import tokenize
 
+from datetime import datetime
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -49,7 +51,7 @@ def home(request):
 
     return render(
         request,
-        'app/index.html', Articles
+        'app/index.html',Articles
     )
 
 def getArticles():
@@ -160,7 +162,7 @@ def getArticles():
 
 
 def getData(): 
-    getArticles()
+    #getArticles()
     
     factContent = []
 
@@ -176,6 +178,19 @@ def getData():
     }
     return Articles
 
+def voting(request):
+    """Renders the voting information page."""
+    assert isinstance(request, HttpRequest)
+    message = get_upcoming_election();
+    return render(
+        request,
+        'app/voting-information.html',
+        {
+            'title': 'Voting Information',
+            'message':message,
+            'year':datetime.now().year,
+            }
+        )
 
 def signup(request):
     """Render the signup page."""
