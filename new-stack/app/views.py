@@ -51,7 +51,7 @@ def home(request):
 
     return render(
         request,
-        'app/index.html',Articles
+        'app/index.html', Articles
     )
 
 def getArticles():
