@@ -92,17 +92,21 @@
                 content.innerHTML = "";
                 
                 var similarity;
+                var urlFact;
                 if(content.childElementCount == 0){
                     for(var i = 0; i < sentences.length; i++){
-                        var temp = i + 1;
+                        var temp = i;
                         var temp2;
                         similarity = 0;
+
 
                         {% for fact in factCheck %}
                             {% if fact.article.id == article.id %}
                                   temp2 = '{{fact.sentenceNumber}}';
                                 if(temp == temp2){
                                     similarity = '{{fact.similarityPercentage}}';
+                                    urlFact = document.createElement('a');
+                                    urlFact.setAttribute("href", '{{fact.URLFact}}');
                                 }
                             {% endif %}
                         {% endfor %}
@@ -116,13 +120,11 @@
                         if(similarity > 0.30){
                             sentence.style = "color:green;font-weight:bold";
                             sentence.style.cursor = "pointer";
-                            sentence.onclick=function(s=similarity, url=urlFact){
-                               window.alert("Similarity: " + s + " | " + "Fact URL: " + url); 
-                            };
-                            sentence.innerHTML = txt + " " + "[" + similarity +"] ";
+                            urlFact.innerHTML = txt + " ";
+                            sentence.append(urlFact);       
                         }
                         else{
-                        sentence.innerHTML = txt + " ";
+                            sentence.innerHTML = txt + " ";
                         }
                         content.append(sentence);
                      }
