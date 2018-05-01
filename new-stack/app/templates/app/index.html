@@ -31,8 +31,12 @@
             <h4 id="title{{article.id}}" style="font-weight:bold"> {{article.title}}</h4>
             <p>{{article.description}}</p>
             <div class="overlay">
-                <button type="button"> save </button>
-                <button type="button"> share </button>
+                {% if user.is_authenticated %}
+                        <form method="GET" action="{% url 'save' %}" style="display: inline-block;">
+                            <input type="hidden" value="{{article.id}}" name="article">
+                            <button type="submit">save</button>
+                        </form>
+                {% endif %}
             </div>
         </div>
 

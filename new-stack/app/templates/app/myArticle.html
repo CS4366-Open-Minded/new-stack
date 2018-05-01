@@ -1,0 +1,144 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="jumbotron" style="background-color:transparent; height:550px">
+        <div class="front-door-banner">
+            <h1 class="front-door-banner__header">NEWS YOU CAN TRUST</h1>
+            <h2 class="front-door-banner__subheader">Politics on the rise</h2>
+            {% if not user.is_authenticated %}
+            <p style="text-align: center"><a href="{% url 'register' %}" class="btn
+                    btn-primary btn-large">Sign Up</a></p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <hr/>
+
+<div class="grid">
+            
+        {% for list in Articles %}
+        {% for article in list %}
+            <div id="card{{article.id}}" class="card" style="position:relative;">
+                <img id="myImg{{article.id}}" class="urlImage"
+                    src={{article.urlImage}} />
+                <h4 id="title{{article.id}}" style="font-weight:bold"> {{article.title}}</h4>
+                <p>{{article.description}}</p>
+                <div class="overlay">
+                    {% if user.is_authenticated %}                    
+                        <button type="button"> share </button>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div id={{article.id}} class="modal">
+                <span id="span{{article.id}}" class="close"> &times; </span>
+                <div class="wrapper">
+                    <img class="img-content" id="img{{article.id}}">
+                    <div class="article-content">
+                        <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
+                        
+                    </div>
+                    <div class="paragraph-content">
+                        <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif" 
+                            id="text{{article.id}}"></h4>
+                    </div>
+                <div>
+                        <ul class="source">
+                            <li> <h5 id="reference{{article.id}}"></h5> </li>
+                            <li> <div> <a id="url{{article.id}}" target="_blank"
+                                        text-decoration:" none" href="">Source</a>
+                                </div></li>
+                            <li> <h5 id="published{{article.id}}"></h5> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                var modal = document.getElementById('{{article.id}}');
+                var modalImg = document.getElementById('img{{article.id}}');
+                var img = document.getElementById('myImg{{article.id}}');
+                img.style.cursor = "pointer";
+                var content = document.getElementById('text{{article.id}}');
+                var author = document.getElementById('reference{{article.id}}');
+                var title = document.getElementById('modalTitle{{article.id}}');
+                var url = document.getElementById('url{{article.id}}');
+                var published = document.getElementById('published{{article.id}}');
+                var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
+                var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
+                var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
+                //var sentiment = document.getElementById('sentiment{{article.id}}');
+                
+                img.onclick = function(){
+                    var str = "";
+                    str = '{{article.text}}';
+                    var sentences = [];
+                    sentences = str.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");    
+
+                    modal.style.display = "block";
+                    modalImg.src = '{{article.urlImage}}';
+                    title.innerHTML = '{{article.title}}';
+                
+                    content.innerHTML = "";
+                    
+                    var similarity;
+                    if(content.childElementCount == 0){
+                        for(var i = 0; i < sentences.length; i++){
+                            var temp = i + 1;
+                            var temp2;
+                            similarity = 0;
+
+                            {% for fact in factCheck %}
+                                {% if fact.article.id == article.id %}
+                                    temp2 = '{{fact.sentenceNumber}}';
+                                    if(temp == temp2){
+                                        similarity = '{{fact.similarityPercentage}}';
+                                    }
+                                {% endif %}
+                            {% endfor %}
+                            
+                            var txt = sentences[i];
+                            txt = txt.replace("[", "");
+                            txt = txt.replace("]", "");
+                            var sentence = null;        
+                            sentence = document.createElement('span');
+                            sentence.id = '{{artcle.id}}' + i;
+                            if(similarity > 0.30){
+                                sentence.style = "color:green;font-weight:bold";
+                                sentence.style.cursor = "pointer";
+                                sentence.onclick=function(s=similarity, url=urlFact){
+                                window.alert("Similarity: " + s + " | " + "Fact URL: " + url); 
+                                };
+                                sentence.innerHTML = txt + " " + "[" + similarity +"] ";
+                            }
+                            else{
+                            sentence.innerHTML = txt + " ";
+                            }
+                            content.append(sentence);
+                        }
+                    }
+
+                    
+                    author.innerHTML = 'Author:'+' {{article.author}}';
+                    url.setAttribute("href",'{{article.url}}');
+                    url.innerHTML = '{{article.source}}';
+                    published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
+                    //sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
+                    //sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
+                    //sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
+                    //sentiment.src = '/static/app/img/{{article.id}}'+'.png';
+                    
+                window.onclick = function(event){
+                    if (event.target == modal){
+                        modal.style.display = "none";
+                    }
+                }   
+
+                }
+            </script>
+        {% endfor %}
+        {%endfor%}
+
+    </div>
+
+{% endblock %}

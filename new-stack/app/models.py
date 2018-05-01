@@ -99,3 +99,13 @@ class searchArticle(models.Model):
     sentimentNeg = models.CharField(max_length=100, null=True)
     sentimentNeu = models.CharField(max_length=100, null=True)
     sentimentPos = models.CharField(max_length=100, null=True)
+
+
+class userArticle(models.Model):
+    article_id = models.ForeignKey('Article')
+    userName = models.CharField(max_length=200)
+
+class shareArticle(models.Model):
+    article = models.ForeignKey('Article')
+    sentFrom = models.CharField(max_length=255)
+    sentTo = models.CharField(max_length=255)

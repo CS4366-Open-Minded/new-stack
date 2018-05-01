@@ -3,12 +3,12 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Article,FactCheck,searchArticle
+from .models import Article,FactCheck,searchArticle, userArticle, shareArticle
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -54,17 +54,60 @@ def home(request):
         'app/index.html', Articles
     )
 
-def getArticles():
+def queryNewsAPI():
+    pageSize = 2
+    url = ('https://newsapi.org/v2/top-headlines?country=us&pageSize='+str(pageSize)+'&apiKey=723ffc551d7e4fa1b3ed28c2b6051c44')
+
+    data = requests.get(url).json()
+    return data
+
+def parseDateTime(publishedAt):
+    t = 'T'
+    Z = 'Z'
+    date = ''
+    time = ''
+
+    for i in publishedAt:
+        if i == t:
+            break
+        date += i
+            
+    date = datetime.strptime(str(date),'%Y-%m-%d')
+    date = date.strftime('%b %d, %Y')
+    timestart = publishedAt.find(t)
+    timeEnd = publishedAt.find(Z)
+
+
+
+    for i in range(timestart+1, timeEnd):
+        time += publishedAt[i]
+
+    AM = 0
+           
+    d = datetime.strptime(time, "%H:%M:%S")
+    hour = time[0:2]
+
+    if(int(hour) != 0 and int(hour) < 12):
+        d = d.strftime("%I:%M:%S")
+        publishedAt = d[1:]+ ' AM'+'      '+date
+    else:
+        d = d.strftime("%I:%M:%S")
+        publishedAt = d+'PM'+'     '+date
+
+    return publishedAt
+
+
+def factCheck():
+    
+    #get articles from NewsAPI
+    data = queryNewsAPI()
+
     now = datetime.now()
 
     with open('custom_stopwords.txt') as e:
         stopwordList=e.read()+','.join(set(stopwords.words('english')))
 
-    sourceURL = ('https://newsapi.org/v2/top-headlines?'
-        'country=us&pageSize=12&'
-        'apiKey=723ffc551d7e4fa1b3ed28c2b6051c44')
     url = []
-    data = requests.get(sourceURL).json()
     for z in range(0, len(data["articles"])):
         url.append(data["articles"][z]["url"])
 
@@ -98,6 +141,7 @@ def getArticles():
 
             index+=1
 
+    #fact check algorithm
     urlHolder = []
     with open("url.txt", "r") as urlTXT:
         inpt = urlTXT.readlines()
@@ -117,33 +161,12 @@ def getArticles():
             description = data["articles"][z]["description"]
             author = data["articles"][z]["author"]
             publishedAt = data["articles"][z]["publishedAt"]
-
-            t = 'T'
-            z = 'Z'
-            date = ''
-            time = ''
-
-            for i in publishedAt:
-                if i == t:
-                    break
-                date += i
-            
-            timestart = text.find(t)
-            timeEnd = text.find(z)
-
-            for i in range(timestart+1, timeEnd):
-                time += text[i]
-            
-            d = datetime.strptime(time, "%H:%M:%S")
-            d = d.strftime("%I:%M:%S")
-
-            publishedAt = date+' '+d
-
             source = data["articles"][z]["source"]["name"]
-            
             url = data["articles"][z]["url"]
             text = (" ".join(texthold[z].split())).replace(" ,","")
-            
+
+            publishedAt = parseDateTime(publishedAt)
+
             sentiment = Vader_Sentiment(text)
 
             Article.objects.create(title=title, author=author, description=description, urlImage=urlImage, url=url, source=source, text=text, publishedOn=publishedAt, sentimentNeg=sentiment["neg"], sentimentNeu=sentiment["neu"], sentimentPos=sentiment["pos"])
@@ -336,3 +359,27 @@ def search(request):
         'Articles': Articles
     }
     return render(request, 'app/search.html', result)
+
+def save(request):
+    if request.GET.get('article'):
+        query = request.GET.get('article')
+        queryArticle = Article.objects.get(id=query)
+
+        user = User.objects.get(username=request.user.username)
+        #check if user already saved clicked article
+        savedArticle = userArticle.objects.all()
+        for article in savedArticle:
+            if(article.article_id.id == queryArticle.id):
+                return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "Article is already saved!"))
+        userArticle.objects.create(article_id=queryArticle, userName=user)
+        return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "Article has been saved"))
+
+def savePage(request):
+    content = []
+    articleContent = userArticle.objects.filter(userName=request.user.username)
+    for article in articleContent:
+        content.append(Article.objects.filter(id=article.article_id.id))
+    Articles = {
+        'Articles': content
+    }
+    return render(request, 'app/myArticle.html', Articles)
