@@ -1,6 +1,14 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+
+<div style="margin-right:110px" align="right">
+    <form method="GET" style="display: inline-block; margin: 12px;" action="{% url 'search' %}">
+                <input style="width:200px;" type="search" value="{{request.GET.q}}" placeholder="Search articles by keyword" name="search">
+                <button type="submit">Submit</button>
+    </form>
+</div>
+
 <div class="jumbotron" style="background-color:transparent; height:550px">
     <div class="front-door-banner">
         <h1 class="front-door-banner__header">NEWS YOU CAN TRUST</h1>
