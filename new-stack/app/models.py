@@ -73,7 +73,6 @@ class Article(models.Model):
     sentimentPos = models.CharField(max_length=100, null=True)
 
 class FactCheck(models.Model):
-    url = models.URLField()
     sentence = models.CharField(max_length=254,null=True)
     sentenceNumber = models.IntegerField()
     URLFact = models.URLField()

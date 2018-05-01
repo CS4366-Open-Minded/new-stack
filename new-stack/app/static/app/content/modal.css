@@ -22,39 +22,52 @@
     background-color: #f1f1f1;
 }
 
-/* Image of modal */
-.img-content{
-    float: left;
-    margin: 25px;
-    width: 80%;
-    max-width: 400px;
-    height: 250px;
-    /* border: 1px solid red; */
-}
-/* Works as a wrapper that contains title and sentiment result*/
-.article-content{
-    float: right;
-    position: relative;
-    height: 230px; 
-    width: 50%; 
-    margin: 15px;
-    margin-top: 28px;
-    /* border: 1px solid green; */
-}
-
 /* Title of modal */
 .title-content{
-    float: left;  
-    position: absolute;
-    top: 0;
-    width: 100%; 
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 90%; 
     word-wrap: normal; 
+    text-align: center;
     font-size: 30px; 
 	font-family:"Times New Roman", Times, serif;
     font-style: bold; 
     color: black;
     /* border: 1px solid red; */
 }
+
+/* wrapper that contains article image and graph */
+.image-content{
+    position: relative;
+    height: 400px; 
+    width: 100%; 
+    margin-top: 20px;
+    /* border: 1px solid green; */
+}
+
+
+/* Image of modal */
+.articleimage-content{
+    margin: 20px;
+    width: 80%;
+    max-width: 400px;
+    height: 90%;
+    /* border: 1px solid red; */
+}
+
+.graph{
+    margin: 20px;
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    width: 500px;
+    height: 90%;
+}
+
+
+
+
 
 /*body of modal */
 .paragraph-content{

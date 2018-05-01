@@ -22,6 +22,13 @@
 
 <hr/>
 
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{message}}');
+        </script>
+    {% endfor %}
+{% endif %}
     <div class="grid">
             
         {% for article in Article %}
@@ -32,26 +39,29 @@
             <p>{{article.description}}</p>
             <div class="overlay">
                 {% if user.is_authenticated %}
-                        <form method="GET" action="{% url 'save' %}" style="display: inline-block;">
+                        <form method="GET" action="{% url 'save' %}" style="float: left; clear: right;">
                             <input type="hidden" value="{{article.id}}" name="article">
                             <button type="submit">save</button>
+                        </form>
+                        
+                        <form method="GET" action="{% url 'share' %}" style="float: right;">
+                            <input type="hidden" value="{{article.id}}" name="shareArticle">
+                            <button type="submit">share</button>
+                            <input style="width: 100px;" type="search" value="{{request.GET.q}}" placeholder="Username" name="username">
                         </form>
                 {% endif %}
             </div>
         </div>
 
+
+
         <div id={{article.id}} class="modal">
-            <span id="span{{article.id}}" class="close"> &times; </span>
             <div class="wrapper">
-                <img class="img-content" id="img{{article.id}}">
-                <div class="article-content">
-                    <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
-                    <div style="margin-top:180px">
-                        <h4 id="sentimentNeg{{article.id}}" style="color:red;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentNeu{{article.id}}" style="color:gray;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
-                        <h4 id="sentimentPos{{article.id}}" style="color:green;font-weight:bold;font-family:'Times New Roman', Times, serif"> </h4>
-                    </div>
-                </div>
+                <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
+                <div class="image-content">
+                    <img class="articleimage-content" id="img{{article.id}}">  
+                    <img class="graph" id="sentiment{{article.id}}" src="">
+                </div> 
                 <div class="paragraph-content">
                     <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif" 
                         id="text{{article.id}}"></h4>
@@ -137,9 +147,10 @@
                 url.setAttribute("href",'{{article.url}}');
                 url.innerHTML = '{{article.source}}';
                 published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
-                sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
-                sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
-                sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
+                sentiment.src="/static/app/img/{{article.id}}.png";
+                // sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
+                // sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
+                // sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
             }
             
             window.onclick = function(event){

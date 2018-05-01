@@ -21,7 +21,7 @@ from concept_extraction import concept_extractor
 from concept_compare import concept_checker
 from Vader_Sentiment_Analyzer import Vader_Sentiment
 from voting_information import get_upcoming_election
-
+from PieChart import sentimentChart 
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -55,7 +55,7 @@ def home(request):
     )
 
 def queryNewsAPI():
-    pageSize = 2
+    pageSize = 12
     url = ('https://newsapi.org/v2/top-headlines?country=us&pageSize='+str(pageSize)+'&apiKey=723ffc551d7e4fa1b3ed28c2b6051c44')
 
     data = requests.get(url).json()
@@ -89,16 +89,14 @@ def parseDateTime(publishedAt):
 
     if(int(hour) != 0 and int(hour) < 12):
         d = d.strftime("%I:%M:%S")
-        publishedAt = d[1:]+ ' AM'+'      '+date
+        publishedAt = d+ ' AM'+'      '+date
     else:
         d = d.strftime("%I:%M:%S")
-        publishedAt = d+'PM'+'     '+date
+        publishedAt = d+' PM'+'     '+date
 
     return publishedAt
 
-
 def factCheck():
-    
     #get articles from NewsAPI
     data = queryNewsAPI()
 
@@ -167,12 +165,17 @@ def factCheck():
 
             publishedAt = parseDateTime(publishedAt)
 
+            #Run sentiment analysis algorithm
             sentiment = Vader_Sentiment(text)
+
+            
 
             Article.objects.create(title=title, author=author, description=description, urlImage=urlImage, url=url, source=source, text=text, publishedOn=publishedAt, sentimentNeg=sentiment["neg"], sentimentNeu=sentiment["neu"], sentimentPos=sentiment["pos"])
 
             #query to get current article id for foreign key reference to FactCheck
             query = Article.objects.get(title=title)            
+
+            sentimentChart(sentiment["pos"], sentiment["neg"], sentiment["neu"], query.id)
 
             for i in range(1, len(sList)+1):
                 if float(pList[i-1]) > .2:
@@ -180,16 +183,16 @@ def factCheck():
                     similarityPercentage = pList[i-1]
                     if uList[i-1] > -1:
                         URLFact = urlHolder[uList[i-1]]
-                    FactCheck.objects.create(url=url, sentence=sList[sentenceNumber],sentenceNumber=sentenceNumber, similarityPercentage=similarityPercentage, URLFact=URLFact, article_id=query.id)
+                    FactCheck.objects.create(sentenceNumber=sentenceNumber, similarityPercentage=similarityPercentage, URLFact=URLFact, article_id=query.id)
 
 
 
 def getData(): 
-    #getArticles()
+    #factCheck()
     
     factContent = []
 
-    articles = Article.objects.order_by('-id')
+    articles = Article.objects.order_by('-id')[:12]
     facts = FactCheck.objects.all().order_by('-id')
 
     for fact in facts:
@@ -296,7 +299,6 @@ def search(request):
     searchArticle.objects.all().delete()
     query = request.GET.get('search')
     data = requests.get('https://newsapi.org/v2/top-headlines?country=us&q='+str(query)+'&apiKey=6894e635a38d4de3be2367635985676d').json()
-    #print(response)
     if(data["articles"] == []):
         message = "No results found for "+query
         result = {
@@ -344,6 +346,7 @@ def search(request):
         description = data["articles"][z]["description"]
         author = data["articles"][z]["author"]
         publishedAt = data["articles"][z]["publishedAt"]
+        publishedAt = parseDateTime(publishedAt)
         source = data["articles"][z]["source"]["name"]
         url = data["articles"][z]["url"]
         text = (" ".join(texthold[z].split())).replace(" ,","")
@@ -383,3 +386,16 @@ def savePage(request):
         'Articles': content
     }
     return render(request, 'app/myArticle.html', Articles)
+
+def share(request):
+    if request.GET.get('shareArticle'):
+        article_id = request.GET.get('shareArticle')
+        queryArticle = Article.objects.get(id=article_id)
+        user = User.objects.get(username=request.user.username)
+        username = request.GET.get("username")
+
+        if(User.objects.filter(username=username)):
+            shareArticle.objects.create(article=queryArticle, sentFrom=user, sentTo=username)
+        else:
+            return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "Username does not exist"))
+        return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "You shared an article with "+username))

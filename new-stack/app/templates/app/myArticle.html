@@ -31,24 +31,28 @@
             </div>
             
             <div id={{article.id}} class="modal">
-                <span id="span{{article.id}}" class="close"> &times; </span>
                 <div class="wrapper">
-                    <img class="img-content" id="img{{article.id}}">
-                    <div class="article-content">
-                        <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
-                        
+                    <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
+                    <div class="image-content">
+                        <img class="articleimage-content" id="img{{article.id}}">
+                        <img class="graph" id="sentiment{{article.id}}" src="">
                     </div>
                     <div class="paragraph-content">
-                        <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif" 
-                            id="text{{article.id}}"></h4>
+                        <h4 style="margin:75px;text-align: justify;font-family:'Times New Roman', Times, serif" id="text{{article.id}}"></h4>
                     </div>
-                <div>
+                    <div>
                         <ul class="source">
-                            <li> <h5 id="reference{{article.id}}"></h5> </li>
-                            <li> <div> <a id="url{{article.id}}" target="_blank"
-                                        text-decoration:" none" href="">Source</a>
-                                </div></li>
-                            <li> <h5 id="published{{article.id}}"></h5> </li>
+                            <li>
+                                <h5 id="reference{{article.id}}"></h5>
+                            </li>
+                            <li>
+                                <div>
+                                    <a id="url{{article.id}}" target="_blank" text-decoration: " none" href="">Source</a>
+                                </div>
+                            </li>
+                            <li>
+                                <h5 id="published{{article.id}}"></h5>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -64,10 +68,7 @@
                 var title = document.getElementById('modalTitle{{article.id}}');
                 var url = document.getElementById('url{{article.id}}');
                 var published = document.getElementById('published{{article.id}}');
-                var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
-                var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
-                var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
-                //var sentiment = document.getElementById('sentiment{{article.id}}');
+                var sentiment = document.getElementById('sentiment{{article.id}}');
                 
                 img.onclick = function(){
                     var str = "";
@@ -123,10 +124,7 @@
                     url.setAttribute("href",'{{article.url}}');
                     url.innerHTML = '{{article.source}}';
                     published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
-                    //sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
-                    //sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
-                    //sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
-                    //sentiment.src = '/static/app/img/{{article.id}}'+'.png';
+                    sentiment.src = '/static/app/img/{{article.id}}'+'.png';
                     
                 window.onclick = function(event){
                     if (event.target == modal){
