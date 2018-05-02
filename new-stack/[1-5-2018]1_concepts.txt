@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ['kanye', 'westcaused', 'stir', 'appearance', 'tuesday', 'tmz', 'live', 'perhaps', 'lesserknown', 'show', 'employee', 'van', 'lathan', 'dropped', 'mic']
 ['west', 'rapper', 'entertainer', 'brought', 'renewed', 'attention', 'past', 'week', 'controversial', 'tweets', 'included', 'feelings', 'president', 'trump', 'surprised', 'tmz', 'employees', 'particularly', 'polarizing', 'thought', 'american', 'slavery', 'choice']
 ['hear', 'slavery', '400', 'years', '400', 'years']
@@ -43,3 +44,19 @@
 ['president', 'quotetweeted', 'west', 'sayingthe', 'tweet', 'wasvery', 'cool']
 ['read', 'kanye', 'wests', 'mom', 'died', '2007']
 ['judging', 'tweets', 'seems', 'still', 'haunt', 'him']
+=======
+['zachary', 'cruz', 'younger', 'brother', 'school', 'shooter', 'nikolas', 'cruz', 'arrested', 'booked', 'palm', 'beach', 'county', 'jail', '641', 'p_m']
+['tuesday']
+['according', 'warrant', 'placed', 'tuesday', 'zachary', 'cruzs', 'arrest', 'accused', 'violating', 'terms', 'probation']
+['zachary', 'cruz', '18', 'placed', 'six', 'months', 'probation', 'host', 'restrictions', 'trespassing', 'marjory', 'stoneman', 'douglas', 'high', 'school']
+['ordered', 'stay', 'least', 'mile', 'away', 'parkland', 'high', 'school', 'attended', 'schools', 'enrolled']
+['according', 'warrant', 'zachary', 'cruz', 'violated', 'probation', 'driving', 'kia', 'suv', 'april', '28', 'without', 'valid', 'driver', 'license', 'going', 'within', '25', 'feet', 'parking', 'lot', 'park', 'vista', 'community', 'high', 'school', 'lake', 'worth']
+['zachary', 'cruz', 'arrested', 'march', '19', 'parkland', 'school', 'campus']
+['police', 'report', 'said', 'warned', 'stay', 'away', 'school']
+['march', '29', 'pleaded', 'contest', 'trespassing', 'charge']
+['zachary', 'cruz', 'faced', 'maximum', '60', 'days', 'jail', 'fine', '500']
+['zachary', 'cruz', 'brother', 'teenager', 'killed', '17', 'people', 'marjory', 'stoneman', 'douglas', 'high', 'school', 'last', 'month', 'freed', 'jail', 'thursday', 'afternoon', 'part', 'plea', 'deal', 'reached', 'trespassing', 'case']
+['cruz', '18', 'pleaded', 'contest', 'exchange', 'sixmonth', 'probation', 'term', 'accompanied', 'by__']
+['zachary', 'cruz', 'admitted', 'deputies', 'stoneman', 'douglas', 'three', 'times', 'since', 'brother', 'nikolas', 'went', 'deadly', 'shooting', 'spree', 'killing', '17', 'students', 'staff', 'wounding', '17', 'others']
+['nikolas', 'cruz', 'facing', 'death', 'penalty', 'convicted', '17', 'counts', 'firstdegree', 'murder', '17', 'counts', 'attempted', 'murder']
+>>>>>>> 63d13b055650add6171d62bdc01403f7aae5ff56

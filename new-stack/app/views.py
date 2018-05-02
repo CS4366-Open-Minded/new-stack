@@ -187,6 +187,7 @@ def getData():
     facts = FactCheck.objects.all().order_by('-id')
 
     for fact in facts:
+        fact.URLFact = fact.URLFact.replace("\n", "")
         factContent.append(fact)
         urlFact.append(fact.URLFact)
     #urlFact = mark_safe(json.dump(list(urlFact), ensure_ascii=False))

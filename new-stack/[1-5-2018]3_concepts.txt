@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ['performance_markfirst', 'image', 'displayedfacebook', 'ceo', 'mark', 'zuckerberg', 'speaks', 'f8', 'facebook', 'developers', 'conference', 'may', '1', '2018', 'san', 'jose', 'california']
 ['justin', 'sullivangetty', 'images', 'tuesday', 'ceo', 'mark', 'zuckerberg', 'took', 'stage', 'keynote', 'presentation', 'companys', 'annual', 'f8', 'developer', 'conference']
 ['confident', 'cracking', 'jokes', '33yearold', 'executive', 'seemed', 'far', 'ease', 'ever', 'marathon', 'congressional', 'testimony', 'last', 'month']
@@ -24,3 +25,5 @@
 ['oculus', 'go', 'slowly', 'nudges', 'virtual', 'reality', 'closer', 'proper', 'mainstream', 'adoption', 'brings', 'kind', 'opportunities', 'apple', 'google', 'enjoy', 'smartphones']
 ['last', 'years', 'burned', 'facebook', 'zuckerberg', 'executives', 'freely', 'admit', 'ready', 'platform', 'misused']
 ['ultimate', 'result', 'facebook', 'seems', 'focusing', 'products', 'foster', 'persontoperson', 'smallgroup', 'communications', 'moves', 'away', 'little', 'grand', 'bazaar', 'news', 'feed']
+=======
+>>>>>>> 63d13b055650add6171d62bdc01403f7aae5ff56

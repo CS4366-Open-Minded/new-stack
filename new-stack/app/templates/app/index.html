@@ -53,8 +53,6 @@
             </div>
         </div>
 
-
-
         <div id={{article.id}} class="modal">
             <div class="wrapper">
                 <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
@@ -88,9 +86,6 @@
             var title = document.getElementById('modalTitle{{article.id}}');
             var url = document.getElementById('url{{article.id}}');
             var published = document.getElementById('published{{article.id}}');
-            var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
-            var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
-            var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
             var sentiment = document.getElementById('sentiment{{article.id}}');
             
             img.onclick = function(){
@@ -106,17 +101,21 @@
                 content.innerHTML = "";
                 
                 var similarity;
+                var urlFact;
                 if(content.childElementCount == 0){
                     for(var i = 0; i < sentences.length; i++){
-                        var temp = i + 1;
+                        var temp = i;
                         var temp2;
                         similarity = 0;
+
 
                         {% for fact in factCheck %}
                             {% if fact.article.id == article.id %}
                                   temp2 = '{{fact.sentenceNumber}}';
                                 if(temp == temp2){
                                     similarity = '{{fact.similarityPercentage}}';
+                                    urlFact = document.createElement('a');
+                                    urlFact.setAttribute("href", '{{fact.URLFact}}');
                                 }
                             {% endif %}
                         {% endfor %}
@@ -127,16 +126,14 @@
                         var sentence = null;        
                         sentence = document.createElement('span');
                         sentence.id = '{{artcle.id}}' + i;
-                        if(similarity > 0.30){
+                        if(similarity > 0.20){
                             sentence.style = "color:green;font-weight:bold";
                             sentence.style.cursor = "pointer";
-                            sentence.onclick=function(s=similarity, url=urlFact){
-                               window.alert("Similarity: " + s + " | " + "Fact URL: " + url); 
-                            };
-                            sentence.innerHTML = txt + " " + "[" + similarity +"] ";
+                            urlFact.innerHTML = txt + " " + "[" + similarity + "]" + " ";
+                            sentence.append(urlFact);       
                         }
                         else{
-                        sentence.innerHTML = txt + " ";
+                            sentence.innerHTML = txt + " ";
                         }
                         content.append(sentence);
                      }
