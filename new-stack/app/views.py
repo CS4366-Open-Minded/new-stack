@@ -189,12 +189,10 @@ def getData():
     for fact in facts:
         fact.URLFact = fact.URLFact.replace("\n", "")
         factContent.append(fact)
-        urlFact.append(fact.URLFact)
-    #urlFact = mark_safe(json.dump(list(urlFact), ensure_ascii=False))
+
     Articles = {
         'Article': articles,
         'factCheck': factContent,
-        'urlFact': urlFact
     }
     return Articles
 
@@ -373,11 +371,22 @@ def save(request):
 
 def savePage(request):
     content = []
-    articleContent = userArticle.objects.filter(userName=request.user.username)
+    factContent = []
+    urlFact = []
+
+    articleContent = userArticle.objects.filter(userName=request.user.username) 
+
     for article in articleContent:
         content.append(Article.objects.filter(id=article.article_id.id))
+        facts = FactCheck.objects.filter(article_id=article.article_id.id)
+        for fact in facts:
+            fact.URLFact = fact.URLFact.replace("\n", "")
+            factContent.append(fact)
+            urlFact.append(fact.URLFact)
+
     Articles = {
-        'Articles': content
+        'Articles': content,
+        'factCheck': factContent,
     }
     return render(request, 'app/myArticle.html', Articles)
 
@@ -398,10 +407,19 @@ def sharePage(request):
     #get all article ids that are shared with your username 
     sharedArticle = shareArticle.objects.filter(sentTo=request.user.username)
     articleContent = []
+    factContent = []
+    urlFact = []
+
     for article in sharedArticle:
         articleContent.append(Article.objects.filter(id=article.article_id))
+        facts = FactCheck.objects.filter(article_id=article.article_id)
+        for fact in facts:
+            fact.URLFact = fact.URLFact.replace("\n", "")
+            factContent.append(fact)
+            urlFact.append(fact.URLFact)
     shareContent = {
         'share': sharedArticle,
-        'Article': articleContent 
+        'Article': articleContent,
+        'factCheck': factContent,
     }
     return render(request, 'app/share.html', shareContent)

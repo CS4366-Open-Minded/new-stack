@@ -87,50 +87,57 @@
                     
                         content.innerHTML = "";
                         
+                        content.innerHTML = "";
+                
                         var similarity;
-                        if(content.childElementCount == 0){
-                            for(var i = 0; i < sentences.length; i++){
-                                var temp = i + 1;
+                        var urlFact;
+                        if (content.childElementCount == 0) {
+                            for (var i = 0; i < sentences.length; i++) {
+                                var temp = i;
                                 var temp2;
                                 similarity = 0;
 
+
                                 {% for fact in factCheck %}
-                                    {% if fact.article.id == article.id %}
-                                        temp2 = '{{fact.sentenceNumber}}';
-                                        if(temp == temp2){
-                                            similarity = '{{fact.similarityPercentage}}';
-                                        }
-                                    {% endif %}
+                                {% if fact.article.id == article.id %}
+                                temp2 = '{{fact.sentenceNumber}}';
+                                if (temp == temp2) {
+                                    similarity = '{{fact.similarityPercentage}}';
+                                    urlFact = document.createElement('a');
+                                    urlFact.setAttribute("href", '{{fact.URLFact}}');
+                                }
+                                {% endif %}
                                 {% endfor %}
-                                
+
                                 var txt = sentences[i];
                                 txt = txt.replace("[", "");
                                 txt = txt.replace("]", "");
-                                var sentence = null;        
+                                var sentence = null;
                                 sentence = document.createElement('span');
                                 sentence.id = '{{artcle.id}}' + i;
-                                if(similarity > 0.30){
+                                if (similarity > 0.20) {
                                     sentence.style = "color:green;font-weight:bold";
                                     sentence.style.cursor = "pointer";
-                                    sentence.onclick=function(s=similarity, url=urlFact){
-                                    window.alert("Similarity: " + s + " | " + "Fact URL: " + url); 
-                                    };
-                                    sentence.innerHTML = txt + " " + "[" + similarity +"] ";
+                                    urlFact.innerHTML = txt + " " + "[" + similarity + "]" + " ";
+                                    sentence.append(urlFact);
                                 }
-                                else{
-                                sentence.innerHTML = txt + " ";
+                                else {
+                                    sentence.innerHTML = txt + " ";
                                 }
                                 content.append(sentence);
                             }
-                        }
-
-                        
                         author.innerHTML = 'Author:'+' {{article.author}}';
 
-                        url.setAttribute("href",'{{fact.url}}');
+                        url.setAttribute("href",'{{article.url}}');
                         url.innerHTML = '{{article.source}}';
                         published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
-                        sentiment.src = '/static/app/img/{{article.id}}'+'.png';
+                        sentiment.src="/static/app/img/{{article.id}}.png";
+                   }
+
+                
+                
+                        
+
                         
                     window.onclick = function(event){
                         if (event.target == modal){
