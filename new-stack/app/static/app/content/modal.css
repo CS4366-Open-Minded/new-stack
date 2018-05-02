@@ -40,7 +40,7 @@
 /* wrapper that contains article image and graph */
 .image-content{
     position: relative;
-    height: 400px; 
+    height: 300px; 
     width: 100%; 
     margin-top: 20px;
     /* border: 1px solid green; */
@@ -64,10 +64,6 @@
     width: 500px;
     height: 90%;
 }
-
-
-
-
 
 /*body of modal */
 .paragraph-content{

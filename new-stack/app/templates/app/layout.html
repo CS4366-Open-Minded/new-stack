@@ -33,13 +33,7 @@
                         <li><a href="{% url 'MyArticles' %}">My Articles</a></li>
                     </ul>
                     <ul class="nav navbar-nav">
-                        <li class="dropdown dropdown-notifications">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i data-count="1" class="glyphicon glyphicon-bell notification-icon">
-                                   
-                                </i>
-                            </a>
-                        </li>
+                        <li><a href="{% url 'sharePage' %}">Shared with you</a></li>
                     </ul>
                  
                 {% endif %}

@@ -1,13 +1,11 @@
 """
 Definition of views.
 """
-
-from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from .models import Article,FactCheck,searchArticle, userArticle, shareArticle
 import requests
 from bs4 import BeautifulSoup
@@ -32,7 +30,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
-
+from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from app.forms import BootstrapRegistrationForm
@@ -44,10 +42,6 @@ def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
     Articles = getData()
-    # paginator = Paginator(Articles, 12)
-
-    # page = request.GET.get('page')
-    # Articles = paginator.get_page(page)
 
     return render(
         request,
@@ -55,7 +49,7 @@ def home(request):
     )
 
 def queryNewsAPI():
-    pageSize = 12
+    pageSize = 5
     url = ('https://newsapi.org/v2/top-headlines?country=us&pageSize='+str(pageSize)+'&apiKey=723ffc551d7e4fa1b3ed28c2b6051c44')
 
     data = requests.get(url).json()
@@ -76,8 +70,6 @@ def parseDateTime(publishedAt):
     date = date.strftime('%b %d, %Y')
     timestart = publishedAt.find(t)
     timeEnd = publishedAt.find(Z)
-
-
 
     for i in range(timestart+1, timeEnd):
         time += publishedAt[i]
@@ -111,8 +103,7 @@ def factCheck():
 
     session = requests.session()
     fname = "["+str(now.day)+"-"+str(now.month)+"-"+str(now.year)+"].json"
-
-    output = {}
+    
     texthold = []
     titlehold = []
     index=0
@@ -191,16 +182,18 @@ def getData():
     #factCheck()
     
     factContent = []
-
+    urlFact = []
     articles = Article.objects.order_by('-id')[:12]
     facts = FactCheck.objects.all().order_by('-id')
 
     for fact in facts:
         factContent.append(fact)
-        
+        urlFact.append(fact.URLFact)
+    #urlFact = mark_safe(json.dump(list(urlFact), ensure_ascii=False))
     Articles = {
         'Article': articles,
         'factCheck': factContent,
+        'urlFact': urlFact
     }
     return Articles
 
@@ -399,3 +392,15 @@ def share(request):
         else:
             return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "Username does not exist"))
         return HttpResponseRedirect('/', messages.add_message(request, messages.INFO, "You shared an article with "+username))
+
+def sharePage(request):
+    #get all article ids that are shared with your username 
+    sharedArticle = shareArticle.objects.filter(sentTo=request.user.username)
+    articleContent = []
+    for article in sharedArticle:
+        articleContent.append(Article.objects.filter(id=article.article_id))
+    shareContent = {
+        'share': sharedArticle,
+        'Article': articleContent 
+    }
+    return render(request, 'app/share.html', shareContent)

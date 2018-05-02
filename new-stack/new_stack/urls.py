@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^save/$', app.views.save, name='save'),
     url(r'^MyArticles/$', app.views.savePage, name='MyArticles'),
     url(r'^share/$', app.views.share, name='share'),
+    url(r'^sharePage/$', app.views.sharePage, name='sharePage'),
     #Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

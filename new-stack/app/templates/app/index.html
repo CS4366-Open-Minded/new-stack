@@ -39,7 +39,7 @@
             <p>{{article.description}}</p>
             <div class="overlay">
                 {% if user.is_authenticated %}
-                        <form method="GET" action="{% url 'save' %}" style="float: left; clear: right;">
+                        <form method="GET" action="{% url 'save' %}" style="float: left; clear: right; margin-right: 2px;">
                             <input type="hidden" value="{{article.id}}" name="article">
                             <button type="submit">save</button>
                         </form>
@@ -144,13 +144,11 @@
 
                 
                 author.innerHTML = 'Author:'+' {{article.author}}';
+
                 url.setAttribute("href",'{{article.url}}');
                 url.innerHTML = '{{article.source}}';
                 published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
                 sentiment.src="/static/app/img/{{article.id}}.png";
-                // sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
-                // sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
-                // sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
             }
             
             window.onclick = function(event){
@@ -158,32 +156,9 @@
                     modal.style.display = "none";
                 }
             }
-
-            var span = document.getElementsByClassName("close")[0];
-            span.onclick = function(){
-                modal.style.display = "none";
-            }
         </script>
         {%endfor%}
     </div>
-
-    <!-- <div class="pagination">
-        <span class="step-links">
-            {% if Articles.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{Articles.previous_page_number}}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{Articles.number}} of {{Articles.paginator.num_pages}}.
-            </span>
-
-            {% if Articles.has_next %}
-            <a href="?page={{Articles.next_page_number}}">next</a>
-            <a href="?page={{Articles.paginator.num_pages}}">last &raquo;</a>
-            {% endif%}
-        </span>
-    </div>> -->
 
 
     {% endblock %}
