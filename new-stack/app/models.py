@@ -75,7 +75,7 @@ class Article(models.Model):
 class FactCheck(models.Model):
     sentence = models.CharField(max_length=254,null=True)
     sentenceNumber = models.IntegerField()
-    URLFact = models.URLField()
+    URLFact = models.URLField(max_length=254, null=True)
     similarityPercentage = models.DecimalField(max_digits=4, decimal_places=4)
     article = models.ForeignKey('Article')
 

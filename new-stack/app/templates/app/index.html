@@ -115,7 +115,7 @@
                                 if(temp == temp2){
                                     similarity = '{{fact.similarityPercentage}}';
                                     urlFact = document.createElement('a');
-                                    urlFact.setAttribute("href", "https://www.google.com");
+                                    urlFact.setAttribute("href", '{{fact.URLFact}}');
                                 }
                             {% endif %}
                         {% endfor %}
@@ -126,7 +126,7 @@
                         var sentence = null;        
                         sentence = document.createElement('span');
                         sentence.id = '{{artcle.id}}' + i;
-                        if(similarity > 0.30){
+                        if(similarity > 0.20){
                             sentence.style = "color:green;font-weight:bold";
                             sentence.style.cursor = "pointer";
                             urlFact.innerHTML = txt + " " + "[" + similarity + "]" + " ";
