@@ -53,8 +53,6 @@
             </div>
         </div>
 
-
-
         <div id={{article.id}} class="modal">
             <div class="wrapper">
                 <h5 id="modalTitle{{article.id}}" class="title-content"></h5>
@@ -88,9 +86,6 @@
             var title = document.getElementById('modalTitle{{article.id}}');
             var url = document.getElementById('url{{article.id}}');
             var published = document.getElementById('published{{article.id}}');
-            var sentimentNeg = document.getElementById('sentimentNeg{{article.id}}');
-            var sentimentNeu = document.getElementById('sentimentNeu{{article.id}}');
-            var sentimentPos = document.getElementById('sentimentPos{{article.id}}');
             var sentiment = document.getElementById('sentiment{{article.id}}');
             
             img.onclick = function(){
@@ -120,7 +115,7 @@
                                 if(temp == temp2){
                                     similarity = '{{fact.similarityPercentage}}';
                                     urlFact = document.createElement('a');
-                                    urlFact.setAttribute("href", '{{fact.URLFact}}');
+                                    urlFact.setAttribute("href", "https://www.google.com");
                                 }
                             {% endif %}
                         {% endfor %}
@@ -134,7 +129,7 @@
                         if(similarity > 0.30){
                             sentence.style = "color:green;font-weight:bold";
                             sentence.style.cursor = "pointer";
-                            urlFact.innerHTML = txt + " ";
+                            urlFact.innerHTML = txt + " " + "[" + similarity + "]" + " ";
                             sentence.append(urlFact);       
                         }
                         else{
@@ -150,9 +145,6 @@
                 url.innerHTML = '{{article.source}}';
                 published.innerHTML = 'Published On:'+' {{article.publishedOn}}';
                 sentiment.src="/static/app/img/{{article.id}}.png";
-                // sentimentNeg.innerHTML = 'Negative: ' + '{{article.sentimentNeg}}';
-                // sentimentNeu.innerHTML = 'Neutral: ' + '{{article.sentimentNeu}}';
-                // sentimentPos.innerHTML = 'Positive: ' + '{{article.sentimentPos}}';
             }
             
             window.onclick = function(event){
