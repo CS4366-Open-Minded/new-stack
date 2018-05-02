@@ -100,7 +100,6 @@ p{
     margin: 10px;
 }
 
-
 @media (min-width: 700px){
     .grid{
         grid-template-columns: 300px 300px;

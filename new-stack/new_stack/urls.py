@@ -40,7 +40,9 @@ urlpatterns = [
      url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         app.views.activateAccount, name='activateAccount'),
     url(r'^search/$', app.views.search, name='search'),
-
+    url(r'^save/$', app.views.save, name='save'),
+    url(r'^MyArticles/$', app.views.savePage, name='MyArticles'),
+    url(r'^share/$', app.views.share, name='share'),
     #Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

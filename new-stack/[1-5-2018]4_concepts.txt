@@ -1,0 +1,2 @@
+['set', 'edition', 'preference', 'set', 'edition', 'preference', 'set', 'edition', 'preference', 'bob', 'ortega', 'cnn', 'investigates', 'updated', '149', 'pm', 'tue', 'may', '1', '2018', 'chat', 'facebook', 'messenger']
+['find', 'happening', 'world', 'unfolds']
